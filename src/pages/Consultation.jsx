@@ -1,13 +1,12 @@
 import "react";
 import Navbar from "../components/Navbar";
 
-const About = () => {
+const Consultation = () => {
   return (
     <div>
-      <Navbar />
-      About
+      <Navbar /> Consultation
     </div>
   );
 };
 
-export default About;
+export default Consultation;

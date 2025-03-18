@@ -1,9 +1,12 @@
-import 'react'
+import "react";
+import Navbar from "../components/Navbar";
 
 const Attorneys = () => {
   return (
-    <div>Attorneys</div>
-  )
-}
+    <div>
+      <Navbar /> Attorneys
+    </div>
+  );
+};
 
-export default Attorneys
+export default Attorneys;
