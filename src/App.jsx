@@ -7,6 +7,8 @@ import Attorneys from "./pages/Attorneys";
 import Blog from "./pages/Blog";
 import Consultation from "./pages/Consultation";
 import Profile from "./pages/Profile";
+import Register from "./pages/Register";
+import Login from "./pages/login";
 
 const App = () => {
   return (
@@ -20,6 +22,8 @@ const App = () => {
           <Route index path="/blog" element={<Blog />} />
           <Route index path="/consultation" element={<Consultation />} />
           <Route index path="/profile" element={<Profile />} />
+          <Route index path="/register" element={<Register />} />
+          <Route index path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </div>

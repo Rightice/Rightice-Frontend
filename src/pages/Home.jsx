@@ -8,7 +8,7 @@ const Home = () => {
     <div
       className="h-screen w-full bg-contain bg-center lg:fixed overflow-scroll overflow-x-hidden"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${bg})`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover',
       }}>
       <Navbar />
       <div className="flex items-center justify-center h-full text-center text-white lg:text-6xl text-3xl font-bold">

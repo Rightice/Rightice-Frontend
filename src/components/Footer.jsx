@@ -1,6 +1,7 @@
 import "react";
 import { Link } from "react-router-dom";
 import Footerbg from "../image/cellbg.png";
+import content from "../../content";
 import Icon from "./Icon";
 import Logo from "./logo";
 
@@ -15,10 +16,9 @@ const Footer = () => {
         <div className="flex flex-col gap-1">
           <Logo />
           <div className="flex flex-col gap-1 text-white">
-            <h1 className="text-3xl font-semibold">Rightice.ng</h1>
-            <p className="text-sm text-base text-white/50">
-              Empowering communities by providing affordable <br /> legal
-              support and human rights education...
+            <h1 className="text-3xl font-semibold">{content.Footer.title}</h1>
+            <p className="text-sm text-base text-white/50 lg:max-w-[60%] max-w-[60%] md:max-w-[40%]">
+              {content.Footer.description}
             </p>
             <Icon />
           </div>
@@ -26,7 +26,9 @@ const Footer = () => {
 
         {/* Footer Links */}
         <div className="lg:mt-0 mt-10">
-          <p className="text-white/50 text-sm text-base">Quick Links</p>
+          <p className="text-white/50 text-sm text-base">
+            {content.Footer.quickLinks}
+          </p>
           <ul className="text-white text-2xl flex flex-col gap-3 lg:pt-5 pt-5">
             <li className="hover:text-white/50 transition ease-in-out duration-300">
               <Link to="/">Home</Link>
@@ -54,19 +56,17 @@ const Footer = () => {
       <hr className="lg:ml-20 lg:mr-20 border-white/20 ml-5 mr-5" />
 
       <div className="relative z-10 lg:flex-row lg:justify-between lg:px-20 py-10 flex flex-col gap-5 px-5">
-        <p className="text-white text-sm">
-          Copyright 2025 @Rightice. All Rights Reserved
-        </p>
+        <p className="text-white text-sm">{content.Footer.copyright}</p>
         <div className="flex gap-2">
           <Link
             to="/"
             className="underline text-sm text-white hover:text-white/50 transition ease-in-out duration-300">
-            Privacy Policy
+            {content.Footer.privacy}
           </Link>
           <Link
             to="/"
             className="underline text-sm text-white hover:text-white/50 transition ease-in-out duration-300">
-            Terms & Condition
+            {content.Footer.terms}
           </Link>
         </div>
       </div>
