@@ -1,10 +1,12 @@
 import "react";
 import Navbar from "../components/Navbar";
+import Contact from "./Contact";
 
 const Consultation = () => {
   return (
     <div>
-      <Navbar /> Consultation
+      {/* <Navbar /> Consultation */}
+      <Contact />
     </div>
   );
 };
