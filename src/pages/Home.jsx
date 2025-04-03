@@ -2,40 +2,47 @@ import "react";
 import bg from "../image/bg.png";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
+import homeImg from "../image/home.png";
 
 const Home = () => {
   return (
     <div
-      className="h-screen w-full bg-contain bg-center lg:fixed overflow-scroll overflow-x-hidden"
+      className="h-screen w-full bg-cover bg-center overflow-auto"
       style={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${bg})`,
       }}>
       <Navbar />
-      <div className="flex items-center justify-center h-full text-center text-white lg:text-6xl text-3xl font-bold">
-        We Specialize In Providing Professional And Affordable Legal Assistance
-        For All.
-      </div>
-      <div className="flex bg-white py-8 px-10">
-        <div>
-          <img src="home.png" className="" />
-        </div>
-        <div className="px-20 ">
-          <h1 className="text-[#BA986B] text-3xl font-bold">ABOUT US</h1>
-          <h1 className="text-3xl pt-4 font-bold">Legal Tech Startup</h1>
-          <p className=" pt-8 text-xl text-justify ">
-            Rightice.ng is a digital platform designed to address the lack of
-            access to legal information, support and resources for people living
-            in Nigeria and Africa at large by leveraging technology. <br />
-            The platform aims to educate users about their rights, connect them
-            legal professionals.
-          </p>
-          <div className="pt-4">
-            <Link to="/about">
-              <button className="bg-[#242D4E] rounded-md p-4 text-white">
-                LEARN MORE
-              </button>
-            </Link>
+      <h1 className="flex items-center justify-center h-full text-center text-white lg:text-7xl text-3xl font-bold leading-tight px-4">
+        We Specialize In Providing Professional And Affordable <br /> Legal
+        Assistance For All.
+      </h1>
+
+      <div className="bg-white min-h-screen flex justify-center items-center py-10 px-6">
+        <div className="flex flex-col lg:flex-row items-center gap-56 max-w-6xl mx-auto">
+          {/* Image Section */}
+          <div className="w-full lg:w-1/2">
+            <img src={homeImg} alt="Home" className="w-full h-auto" />
+          </div>
+
+          {/* Text Section */}
+          <div className="w-full lg:w-1/2 space-y-7">
+            <h1 className="text-[#BA986B] text-3xl font-bold">ABOUT US</h1>
+            <h1 className="text-3xl font-bold">Legal Tech Startup</h1>
+            <p className="text-xl text-justify max-w-lg">
+              Rightice.ng is a digital platform designed to address the lack of
+              access to legal information, support, and resources for people
+              living in Nigeria and Africa at large by leveraging technology.
+              The platform aims to educate users about their rights and connect
+              them with legal professionals.
+            </p>
+            <div>
+              <Link
+                to="/about"
+                className="bg-[#242D4E] rounded-md px-6 py-3 text-white">
+                Learn more
+              </Link>
+            </div>
           </div>
         </div>
       </div>

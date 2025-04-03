@@ -51,12 +51,12 @@ const Blog = () => {
           {blogs.map((blog, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-md overflow-hidden lg:w-80 w-110 group hover:bg-gradient-to-t hover:from-[#EFEFF7] hover:to-[#EFEFF7] transition ease-in-out duration-400">
+              className="bg-white rounded-lg shadow-md overflow-hidden lg:w-[25%] w-110 group hover:bg-gradient-to-t hover:from-[#EFEFF7] hover:to-[#EFEFF7] transition ease-in-out duration-400">
               <div className="relative">
                 <img
                   src={blog.image}
                   alt="Images"
-                  className="w-full h-48 object-cover group-hover:scale-110 transition ease-in-out duration-300"
+                  className="w-full h-full object-fit group-hover:scale-110 transition ease-in-out duration-300"
                 />
                 <p className="text-white rounded-tr-[5px] p-2 text-sm group-hover:text-white absolute bottom-0 bg-[#242E4D]">
                   {blog.date}

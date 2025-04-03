@@ -14,7 +14,7 @@ const Navbar = () => {
         </div>
 
         <button
-          className="text-2xl md:hidden text-[#fff]"
+          className="text-2xl md:hidden text-[#242E4D] font-bold"
           onClick={() => setIsOpen(true)}>
           ☰
         </button>
@@ -55,7 +55,7 @@ const Navbar = () => {
               </Link>
               <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
             </li>
-            <li className="group relative inline-block">
+            {/* <li className="group relative inline-block">
               <Link to="/profile" onClick={() => setIsOpen(false)}>
                 Profile
               </Link>
@@ -66,7 +66,7 @@ const Navbar = () => {
                 Book Consultation
               </Link>
               <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
-            </li>
+            </li> */}
           </ul>
 
           {/* Register */}

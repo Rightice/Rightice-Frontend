@@ -3,7 +3,6 @@ import Lawhammer from "../image/4.jpg";
 import Logo from "../components/logo";
 import Google from "../image/Google.png";
 import { Link } from "react-router-dom";
-// import content from "../../content";
 
 const login = () => {
   return (
@@ -18,7 +17,8 @@ const login = () => {
           <Logo />
           <div className="text-white absolute inset-0 flex items-center justify-center">
             <header className="text-3xl lg:text-5xl text-center">
-              Welcome <span className="text-[#BA986B] font-semibold">Back!</span>
+              Welcome{" "}
+              <span className="text-[#BA986B] font-semibold">Back!</span>
             </header>
           </div>
         </div>
@@ -36,12 +36,6 @@ const login = () => {
             placeholder="Email Address"
             className="w-full pb-3 border-b border-stone-300 focus:outline-none focus:border-blue-500 placeholder:text-sm focus:scale-105 transition"
           />
-
-          {/* <input
-            type="text"
-            placeholder="Username"
-            className="w-full pb-3 border-b border-stone-300 focus:outline-none focus:border-blue-500 placeholder:text-sm focus:scale-105 transition"
-          /> */}
 
           <input
             type="password"
