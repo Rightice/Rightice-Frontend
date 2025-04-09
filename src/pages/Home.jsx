@@ -13,7 +13,7 @@ const Home = () => {
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${bg})`,
       }}>
       <Navbar />
-      <h1 className="flex items-center justify-center h-full text-center text-white lg:text-7xl text-3xl font-bold leading-tight px-4">
+      <h1 className="flex items-center justify-center h-full text-center text-white lg:text-5xl text-3xl font-bold leading-tight px-4">
         We Specialize In Providing Professional And Affordable <br /> Legal
         Assistance For All.
       </h1>

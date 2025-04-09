@@ -55,13 +55,13 @@ const Navbar = () => {
               </Link>
               <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
             </li>
-            {/* <li className="group relative inline-block">
-              <Link to="/profile" onClick={() => setIsOpen(false)}>
-                Profile
+            <li className="group relative inline-block">
+              <Link to="/contact" onClick={() => setIsOpen(false)}>
+                Contact us
               </Link>
               <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
             </li>
-            <li className="group relative inline-block">
+            {/* <li className="group relative inline-block">
               <Link to="/consultation" onClick={() => setIsOpen(false)}>
                 Book Consultation
               </Link>

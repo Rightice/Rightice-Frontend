@@ -6,7 +6,7 @@ import About from "./pages/About";
 import Attorneys from "./pages/Attorneys";
 import Blog from "./pages/Blog";
 import Consultation from "./pages/Consultation";
-import Profile from "./pages/Profile";
+import Contact from "./pages/Contact";
 import Register from "./pages/Register";
 import Login from "./pages/login";
 
@@ -21,7 +21,7 @@ const App = () => {
           <Route index path="/attorneys" element={<Attorneys />} />
           <Route index path="/blog" element={<Blog />} />
           <Route index path="/consultation" element={<Consultation />} />
-          <Route index path="/profile" element={<Profile />} />
+          <Route index path="/contact" element={<Contact />} />
           <Route index path="/register" element={<Register />} />
           <Route index path="/login" element={<Login />} />
         </Routes>
