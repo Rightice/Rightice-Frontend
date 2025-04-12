@@ -8,7 +8,7 @@ const About = () => {
   return (
     <div>
       <Navbar />
-      <div className="bg-white">
+      <div className="">
         <div className="flex flex-col-reverse lg:flex-row items-center px-8 py-8 space-y-6 lg:space-y-0">
 
           {/* Image Section */}

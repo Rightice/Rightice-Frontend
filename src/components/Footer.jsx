@@ -31,7 +31,7 @@ const Footer = () => {
           </p>
           <ul className="text-white text-2xl flex flex-col gap-3 lg:pt-5 pt-5">
             <li className="hover:text-white/50 transition ease-in-out duration-300">
-              <Link to="/">Home</Link>
+              <Link to="/home">Home</Link>
             </li>
             <li className="hover:text-white/50 transition ease-in-out duration-300">
               <Link to="/about">About Us</Link>
