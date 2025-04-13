@@ -1,8 +1,12 @@
 import 'react'
+import LogoutButton from '../components/LogoutButton'
 
 const Profile = () => {
   return (
-    <div>Profile</div>
+    <div>
+      Profile
+      <LogoutButton />
+    </div>
   )
 }
 

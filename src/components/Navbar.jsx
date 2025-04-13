@@ -1,74 +1,125 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import Logo from "./logo";
+import { auth } from "../auth/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import LogoutButton from "../components/LogoutButton";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user || null);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div>
-      <nav className="lg:bg-[#242E4D] lg:flex lg:justify-between z-100 lg:relative lg:items-center lg:py-2 lg:px-10 lg:mt-3 lg:rounded-[50px] flex justify-between pt-[5%] ml-[3%] mr-[3%]">
+      <nav className="lg:bg-white lg:shadow-sm lg:flex lg:justify-between lg:items-center lg:p-1 lg:px-10 flex justify-between pt-6 px-5">
         {/* Logo */}
-        <div>
-          <Logo />
-        </div>
+        <Logo />
 
+        {/* Hamburger icon on mobile */}
         <button
-          className="text-2xl md:hidden text-white"
+          className="text-3xl lg:hidden text-[#fff]"
           onClick={() => setIsOpen(true)}>
           ☰
         </button>
 
-        <div
-          className={`fixed top-0 right-0 h-full w-full bg-black text-[#fff] lg:text-[#433E49] z-50 transform ${
-            isOpen ? "translate-x-0" : "translate-x-full"
-          } bg-black/90 transition-transform duration-300 ease-in-out md:static md:translate-x-0 md:flex md:items-center md:justify-end md:w-auto md:bg-transparent`}>
-          {/* Close button */}
-          <button
-            className="absolute top-13 right-4 text-white text-3xl md:hidden"
-            onClick={() => setIsOpen(false)}>
-            <IoClose />
-          </button>
+        {/* Desktop navbar */}
+        <ul className="hidden lg:flex gap-5 items-center text-black/70 text-sm">
+          <li>
+            <Link to="/home">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About Us</Link>
+          </li>
+          <li>
+            <Link to="/attorneys">Attorneys</Link>
+          </li>
+          <li>
+            <Link to="/blog">Blog</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact us</Link>
+          </li>
+          <li className="lg:ml-20">
+            {user ? (
+              <Link to="/profile" className="text-[1.1rem] font-semibold leading-[.2rem]">
+                Hello 👋 <br /> <span className="text-[10px] text-base text-black/50 font-normal">{user.email || user.displayName}</span>
+              </Link>
+            ) : (
+              <Link to="/">Log in</Link>
+            )}
+          </li>
+        </ul>
 
-          <ul className="pt-[40%] flex flex-col justify-center items-center md:flex-row gap-5 lg:text-sm text-white text-2xl p-4 md:p-0">
-            <li className="group relative inline-block">
-              <Link to="/" onClick={() => setIsOpen(false)}>
-                Home
-              </Link>
-              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
-            </li>
-            <li className="group relative inline-block">
-              <Link to="/about" onClick={() => setIsOpen(false)}>
-                About Us
-              </Link>
-              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
-            </li>
-            <li className="group relative inline-block">
-              <Link to="/attorneys" onClick={() => setIsOpen(false)}>
-                Attorneys
-              </Link>
-              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
-            </li>
-            <li className="group relative inline-block">
-              <Link to="/blog" onClick={() => setIsOpen(false)}>
-                Blog
-              </Link>
-              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
-            </li>
-            <li className="group relative inline-block">
-              <Link to="/profile" onClick={() => setIsOpen(false)}>
-                Profile
-              </Link>
-              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
-            </li>
-            <li className="group relative inline-block border border-[#BA986B] rounded-[50px] pl-7 pr-7 pt-3 pb-3 hover:bg-[#BA986B] transition ease-in duration-300">
-              <Link to="/consultation" onClick={() => setIsOpen(false)}>
-                Book Consultation
-              </Link>
-            </li>
-          </ul>
-        </div>
+        {/* Mobile Menu Overlay */}
+        {isOpen && (
+          <div className="fixed inset-0 bg-black/90 z-50 flex flex-col p-8">
+            {/* Close Button */}
+            <div className="flex justify-end">
+              <button
+                className="text-white text-3xl"
+                onClick={() => setIsOpen(false)}>
+                <IoClose />
+              </button>
+            </div>
+
+            {/* Mobile Links */}
+            <ul className="mt-10 flex flex-col gap-6 text-white text-xl py-10 font-medium">
+              <li>
+                {user ? (
+                  <Link
+                    to="/profile"
+                    className="text-1xl font-semibold"
+                    onClick={() => setIsOpen(false)}>
+                    Welcome <br />
+                    <span className="text-[14px] font-normal text-white/70">
+                      {user.email || user.displayName}
+                    </span>
+                  </Link>
+                ) : (
+                  <Link to="/" onClick={() => setIsOpen(false)}>
+                    Log in
+                  </Link>
+                )}
+              </li>
+              <li>
+                <Link to="/home" onClick={() => setIsOpen(false)}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" onClick={() => setIsOpen(false)}>
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/attorneys" onClick={() => setIsOpen(false)}>
+                  Attorneys
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" onClick={() => setIsOpen(false)}>
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" onClick={() => setIsOpen(false)}>
+                  Contact us
+                </Link>
+              </li>
+            </ul>
+
+            <LogoutButton />
+          </div>
+        )}
       </nav>
     </div>
   );
