@@ -43,11 +43,11 @@ const Footer = () => {
               <Link to="/blog">Blog</Link>
             </li>
             <li className="hover:text-white/50 transition ease-in-out duration-300">
-              <Link to="/consultation">Book Consultation</Link>
+              <Link to="/contact">Contact Us</Link>
             </li>
-            <li className="hover:text-white/50 transition ease-in-out duration-300">
+            {/* <li className="hover:text-white/50 transition ease-in-out duration-300">
               <Link to="/profile">Profile</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
