@@ -9,15 +9,22 @@ const Home = () => {
   return (
     <section>
       <div
-        className="h-screen w-full bg-contain bg-center no-repeat overflow-auto"
+        className="h-screen w-full lg:bg-contain lg:bg-center lg:no-repeat overflow-auto"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${bg})`,
         }}>
         <Navbar />
-        <h1 className="flex items-center justify-center h-full text-center text-white lg:text-5xl text-3xl font-bold leading-tight px-4">
-          We Specialize In Providing Professional And Affordable <br /> Legal
-          Assistance For All.
-        </h1>
+        <div className="h-screen flex flex-col gap-10 justify-center items-center text-center px-4">
+          <h1 className="text-white lg:text-5xl text-3xl font-bold leading-tight">
+            We Specialize In Providing Professional And Affordable{" "}
+            <br className="hidden sm:block" /> Legal Assistance For All.
+          </h1>
+          <Link
+            className="text-white bg-[#BA986B] hover:bg-[#a57e54] px-6 py-3 rounded-md transition-colors duration-300"
+            to="/consultation">
+            Book Consultation
+          </Link>
+        </div>
 
         <div className="bg-white flex justify-center items-center py-10 px-6">
           <div className="flex flex-col lg:flex-row items-center gap-10 max-w-6xl mx-auto">

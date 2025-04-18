@@ -95,7 +95,7 @@ const Register = () => {
       </div>
 
       {/* Signup Form */}
-      <div className="w-full lg:w-1/2 lg:mt-0 -mt-20 relative z-100 flex justify-center items-center p-6 lg:p-10 bg-white rounded-tl-[50px] rounded-tr-[50px] shadow-lg">
+      <div className="w-full lg:w-1/2 lg:mt-0 -mt-20 relative z-100 flex justify-center items-center p-6 lg:p-10 bg-white rounded-tl-[30px] rounded-tr-[30px] shadow-lg">
         <form
           className="w-full max-w-md flex flex-col gap-5"
           onSubmit={handleSignUp}>

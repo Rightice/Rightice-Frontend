@@ -22,7 +22,9 @@ const Navbar = () => {
     <div>
       <nav className="lg:bg-white lg:shadow-sm lg:flex lg:justify-between lg:items-center lg:p-1 lg:px-10 flex justify-between pt-6 px-5">
         {/* Logo */}
-        <Logo />
+        <div className="lg:w-[40%]">
+          <Logo />
+        </div>
 
         {/* Hamburger icon on mobile */}
         <button

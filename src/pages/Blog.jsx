@@ -9,6 +9,7 @@ import { FaCircleChevronRight } from "react-icons/fa6";
 import "@fontsource/lato";
 import content from "../../content";
 
+
 const Blog = () => {
   const blogs = [
     {
@@ -17,6 +18,7 @@ const Blog = () => {
       title: "Understanding Land and Property Rights in Nigeria",
       description:
         "A comprehensive guide  to help you navigate land ownership and tenancy laws.",
+      link: "/blog/land-and-property-rights",
     },
     {
       image: SecondImage,
@@ -24,6 +26,7 @@ const Blog = () => {
       title: "Your Rights as an Employee: A Legal Overview...",
       description:
         "An article detailing labor laws and employee rights in Nigeria",
+      link: "/blog/employee-rights-legal-overview",
     },
     {
       image: ThirdImage,
@@ -31,16 +34,16 @@ const Blog = () => {
       title: "Family and Domestic Law",
       description:
         "Guidance on marriage & divorce, child custody and support, domestic violence and labor & parental rights laws.",
+      link: "/blog/family-and-domestic-law",
     },
   ];
+
   return (
     <div className="bg-white">
       <Navbar />
-      <div className="flex flex-col gap-3 justify-center items-center text-center mt-10">
-        <h1 className="text-5xl border-b-4 pb-5 text-[#242E4D]">
-          {content.Blog.title}
-        </h1>
-        <p className="text-sm text-base text-stone-700 max-w-[80%] lg:max-w-[60%] md:max-w-[90%]">
+      <div className="flex flex-col gap-3 justify-center items-center text-center mt-10 text-[#242E4D]">
+        <h1 className="text-5xl pb-5">{content.Blog.title}</h1>
+        <p className="text-sm text-base max-w-[80%] lg:max-w-[60%] md:max-w-[90%]">
           {content.Blog.description}
         </p>
       </div>
@@ -56,7 +59,7 @@ const Blog = () => {
                 <img
                   src={blog.image}
                   alt="Images"
-                  className="w-full h-full object-fit group-hover:scale-110 transition ease-in-out duration-300"
+                  className="w-full h-full object-fit group-hover:scale-105 transition ease-in-out duration-300"
                 />
                 <p className="text-white rounded-tr-[5px] p-2 text-sm group-hover:text-white absolute bottom-0 bg-[#242E4D]">
                   {blog.date}
@@ -66,9 +69,11 @@ const Blog = () => {
                 <h1 className="font-semibold text-lg text-[#242E4D]">
                   {blog.title}
                 </h1>
-                <p className="text-sm text-gray-700">{blog.description}</p>
-                <Link to="" className="flex gap-3 text-[#242E4D] text-sm mt-10">
-                  {content.Blog.learnmore}{" "}
+                <p className="text-sm text-[#242E4D]">{blog.description}</p>
+                <Link
+                  to={blog.link}
+                  className="flex gap-3 text-[#242E4D] text-sm mt-10">
+                  {content.Blog.learnmore}
                   <FaCircleChevronRight className="mt-1" />
                 </Link>
               </div>

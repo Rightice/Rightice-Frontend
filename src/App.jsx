@@ -1,5 +1,6 @@
 import "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Attorneys from "./pages/Attorneys";
@@ -9,24 +10,46 @@ import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Login from "./pages/login";
+import PropertyRights from "./pages/propertyRights";
+import YourRights from "./pages/yourRights";
+import FamilyLaw from "./pages/familyLaw";
+
+// ScrollToTop must be used inside BrowserRouter
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 const App = () => {
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/attorneys" element={<Attorneys />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/consultation" element={<Consultation />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <ScrollToTop /> {/* 👈 This makes the scroll work on route change */}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/attorneys" element={<Attorneys />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route
+          path="/blog/land-and-property-rights"
+          element={<PropertyRights />}
+        />
+        <Route
+          path="/blog/employee-rights-legal-overview"
+          element={<YourRights />}
+        />
+        <Route path="/blog/family-and-domestic-law" element={<FamilyLaw />} />
+        <Route path="/consultation" element={<Consultation />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
