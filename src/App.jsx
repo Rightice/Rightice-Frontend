@@ -7,14 +7,17 @@ import Attorneys from "./pages/Attorneys";
 import Blog from "./pages/Blog";
 import Consultation from "./pages/Consultation";
 import Contact from "./pages/Contact";
-import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Login from "./pages/login";
 import PropertyRights from "./pages/propertyRights";
 import YourRights from "./pages/yourRights";
 import FamilyLaw from "./pages/familyLaw";
+// Dashboard
+import Profile from "./pages/Profile";
+import Payment from "./pages/payment";
+import Privacy from "./pages/privacy";
+import Settings from "./pages/settings";
 
-// ScrollToTop must be used inside BrowserRouter
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -28,7 +31,7 @@ function ScrollToTop() {
 const App = () => {
   return (
     <BrowserRouter>
-      <ScrollToTop /> {/* 👈 This makes the scroll work on route change */}
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -48,6 +51,9 @@ const App = () => {
         <Route path="/consultation" element={<Consultation />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
   );
