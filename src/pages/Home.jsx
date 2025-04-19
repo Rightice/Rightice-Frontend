@@ -9,28 +9,41 @@ const Home = () => {
   return (
     <section>
       <div
-        className="h-screen w-full bg-contain bg-center overflow-auto"
+        className="h-screen w-full lg:bg-contain lg:bg-center lg:no-repeat overflow-auto"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${bg})`,
         }}>
-          <Navbar />
-        <h1 className="flex items-center justify-center h-full text-center text-white lg:text-5xl text-3xl font-bold leading-tight px-4">
-          We Specialize In Providing Professional And Affordable <br /> Legal
-          Assistance For All.
-        </h1>
+        <Navbar />
+        <div className="h-screen flex flex-col gap-10 justify-center items-center text-center px-4">
+          <h1 className="text-white lg:text-5xl text-3xl font-bold leading-tight">
+            We Specialize In Providing Professional And Affordable{" "}
+            <br className="hidden sm:block" /> Legal Assistance For All.
+          </h1>
+          <Link
+            className="text-white bg-[#BA986B] hover:bg-[#a57e54] px-6 py-3 rounded-md transition-colors duration-300"
+            to="/consultation">
+            Book Consultation
+          </Link>
+        </div>
 
-        <div className="bg-white min-h-screen flex justify-center items-center py-10 px-6">
-          <div className="flex flex-col lg:flex-row items-center gap-56 max-w-6xl mx-auto">
+        <div className="bg-white flex justify-center items-center py-10 px-6">
+          <div className="flex flex-col lg:flex-row items-center gap-10 max-w-6xl mx-auto">
             {/* Image Section */}
             <div className="w-full lg:w-1/2">
-              <img src={homeImg} alt="Home" className="w-full h-auto" />
+              <img
+                src={homeImg}
+                alt="Home"
+                className="w-83 rounded-lg h-auto"
+              />
             </div>
 
             {/* Text Section */}
             <div className="w-full lg:w-1/2 space-y-7">
-              <h1 className="text-[#BA986B] text-3xl font-bold">ABOUT US</h1>
-              <h1 className="text-3xl font-bold">Legal Tech Startup</h1>
-              <p className="text-xl text-justify max-w-lg">
+              <h1 className="text-[#BA986B] text-3xl font-semibold">
+                ABOUT US
+              </h1>
+              <h1 className="text-lg text-[#242D4E]">Legal Tech Startup</h1>
+              <p className="text-md text-stone-700 text-justify max-w-lg">
                 Rightice.ng is a digital platform designed to address the lack
                 of access to legal information, support, and resources for
                 people living in Nigeria and Africa at large by leveraging

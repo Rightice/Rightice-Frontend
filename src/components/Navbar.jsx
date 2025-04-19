@@ -22,11 +22,13 @@ const Navbar = () => {
     <div>
       <nav className="lg:bg-white lg:shadow-sm lg:flex lg:justify-between lg:items-center lg:p-1 lg:px-10 flex justify-between pt-6 px-5">
         {/* Logo */}
-        <Logo />
+        <div className="lg:w-[40%]">
+          <Logo />
+        </div>
 
         {/* Hamburger icon on mobile */}
         <button
-          className="text-3xl lg:hidden text-[#fff]"
+          className="text-3xl lg:hidden text-[#242D4E]"
           onClick={() => setIsOpen(true)}>
           ☰
         </button>
@@ -50,8 +52,13 @@ const Navbar = () => {
           </li>
           <li className="lg:ml-20">
             {user ? (
-              <Link to="/profile" className="text-[1.1rem] font-semibold leading-[.2rem]">
-                Hello 👋 <br /> <span className="text-[10px] text-base text-black/50 font-normal">{user.email || user.displayName}</span>
+              <Link
+                to="/profile"
+                className="text-[1.1rem] font-semibold leading-[.2rem]">
+                Hello 👋 <br />{" "}
+                <span className="text-[10px] text-base text-black/50 font-normal">
+                  {user.email || user.displayName}
+                </span>
               </Link>
             ) : (
               <Link to="/">Log in</Link>
@@ -63,7 +70,7 @@ const Navbar = () => {
         {isOpen && (
           <div className="fixed inset-0 bg-black/90 z-50 flex flex-col p-8">
             {/* Close Button */}
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-2">
               <button
                 className="text-white text-3xl"
                 onClick={() => setIsOpen(false)}>

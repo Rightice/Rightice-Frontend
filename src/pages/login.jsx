@@ -94,7 +94,7 @@ const Login = () => {
       </div>
 
       {/* Login Form */}
-      <div className="w-full lg:w-1/2 lg:mt-0 -mt-20 relative z-100 lg:rounded-none rounded-tl-[50px] rounded-tr-[50px] lg:shadow-none shadow-lg flex justify-center items-center p-6 lg:p-10 bg-white">
+      <div className="w-full lg:w-1/2 lg:mt-0 -mt-20 relative z-100 lg:rounded-none rounded-tl-[30px] rounded-tr-[30px] lg:shadow-none shadow-lg flex justify-center items-center p-6 lg:p-10 bg-white">
         <form
           onSubmit={handleLogin}
           className="w-full max-w-md flex flex-col gap-5">
