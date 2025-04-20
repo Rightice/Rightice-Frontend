@@ -9,14 +9,14 @@ import Consultation from "./pages/Consultation";
 import Contact from "./pages/Contact";
 import Register from "./pages/Register";
 import Login from "./pages/login";
-import PropertyRights from "./pages/propertyRights";
-import YourRights from "./pages/yourRights";
-import FamilyLaw from "./pages/familyLaw";
+import PropertyRights from "./Blogpages/propertyRights";
+import YourRights from "./Blogpages/yourRights";
+import FamilyLaw from "./Blogpages/familyLaw";
 // Dashboard
-import Profile from "./pages/Profile";
-import Payment from "./pages/payment";
-import Privacy from "./pages/privacy";
-import Settings from "./pages/settings";
+import Profile from "./Dashboard/Profile";
+import Payment from "./Dashboard/payment";
+import Privacy from "./Dashboard/privacy";
+import Settings from "./Dashboard/settings";
 
 function ScrollToTop() {
   const { pathname } = useLocation();

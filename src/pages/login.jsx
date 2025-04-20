@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -15,9 +17,15 @@ import Google from "../image/Google.png";
 const Login = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const { email, password } = formData;
 
   // Redirect if already logged in
   useEffect(() => {
@@ -28,13 +36,23 @@ const Login = () => {
     return () => unsubscribe();
   }, [navigate]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   // Email/Password login handler
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
 
     if (!email || !password) {
       setError("Please enter both email and password.");
+      setIsLoading(false);
       return;
     }
 
@@ -44,41 +62,85 @@ const Login = () => {
         email,
         password
       );
-      if (userCredential.user) {
-        navigate("/home");
-      }
+
+      // Save auth user for reference
+      localStorage.setItem(
+        "authUser",
+        JSON.stringify({
+          email: userCredential.user.email,
+          displayName: userCredential.user.displayName,
+        })
+      );
+
+      navigate("/home");
     } catch (err) {
       console.error(err);
-      setError("Pleaes Signup first before signing in.");
+
+      // Handle specific error codes
+      switch (err.code) {
+        case "auth/user-not-found":
+          setError("No account found with this email. Please sign up first.");
+          break;
+        case "auth/wrong-password":
+          setError("Incorrect password. Please try again.");
+          break;
+        case "auth/invalid-email":
+          setError("Please enter a valid email address.");
+          break;
+        case "auth/too-many-requests":
+          setError("Too many failed login attempts. Please try again later.");
+          break;
+        default:
+          setError(
+            "Login failed. Please check your credentials and try again."
+          );
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleGoogleLogin = async () => {
     setError("");
+    setGoogleLoading(true);
 
     try {
       const result = await signInWithPopup(auth, provider);
       const isNewUser = result._tokenResponse?.isNewUser;
+      const user = result.user;
 
       if (isNewUser) {
         await auth.signOut();
-        setError("Please Signup first before signing in with Google.");
+        setError("Please sign up first before signing in with Google.");
       } else {
+        // Save auth user for reference
+        localStorage.setItem(
+          "authUser",
+          JSON.stringify({
+            email: user.email,
+            displayName: user.displayName,
+          })
+        );
+
         navigate("/home");
       }
     } catch (err) {
-      setError("Google login failed. Please try again.");
       console.error(err);
+      if (err.code === "auth/popup-closed-by-user") {
+        setError("Sign in was cancelled. Please try again.");
+      } else {
+        setError("Google login failed. Please try again.");
+      }
+    } finally {
+      setGoogleLoading(false);
     }
   };
 
-
-
   return (
-    <div className="flex flex-col lg:flex-row-reverse lg:flex-row h-screen">
+    <div className="flex flex-col lg:flex-row h-screen">
       <div className="w-full lg:w-1/2 relative min-h-[50vh] lg:min-h-screen">
         <img
-          src={Lawhammer}
+          src={Lawhammer || "/placeholder.svg"}
           alt="Law Hammer"
           className="w-full h-full object-cover"
         />
@@ -94,7 +156,7 @@ const Login = () => {
       </div>
 
       {/* Login Form */}
-      <div className="w-full lg:w-1/2 lg:mt-0 -mt-20 relative z-100 lg:rounded-none rounded-tl-[30px] rounded-tr-[30px] lg:shadow-none shadow-lg flex justify-center items-center p-6 lg:p-10 bg-white">
+      <div className="w-full lg:w-1/2 lg:mt-0 -mt-20 relative z-10 lg:rounded-none rounded-tl-[30px] rounded-tr-[30px] lg:shadow-none shadow-lg flex justify-center items-center p-6 lg:p-10 bg-white">
         <form
           onSubmit={handleLogin}
           className="w-full max-w-md flex flex-col gap-5">
@@ -102,21 +164,45 @@ const Login = () => {
             Sign into your Account
           </h2>
 
-          <input
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full pb-3 border-b border-stone-300 focus:outline-none focus:border-blue-500 placeholder:text-sm focus:scale-105 transition"
-          />
+          <div className="space-y-1">
+            {/* <label htmlFor="email" className="text-sm text-gray-600">
+              Email Address
+            </label> */}
+            <input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={handleChange}
+              className="w-full pb-3 border border-stone-300 rounded px-3 py-2 focus:outline-none placeholder:text-sm"
+              required
+            />
+          </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full pb-3 border-b border-stone-300 focus:outline-none focus:border-blue-500 placeholder:text-sm focus:scale-105 transition"
-          />
+          <div className="space-y-1">
+            {/* <label htmlFor="password" className="text-sm text-gray-600">
+              Password
+            </label> */}
+            <input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={handleChange}
+              className="w-full pb-3 border border-stone-300 rounded px-3 py-2 focus:outline-none placeholder:text-sm"
+              required
+            />
+          </div>
+
+          <div className="flex justify-end">
+            <Link
+              to="/forgot-password"
+              className="text-sm text-[#242E4D] hover:underline">
+              Forgot password?
+            </Link>
+          </div>
 
           {error && (
             <p className="text-red-500 bg-red-100 p-3 rounded text-sm">
@@ -126,8 +212,9 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 cursor-pointer">
-            Sign in
+            disabled={isLoading}
+            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed">
+            {isLoading ? "Signing in..." : "Sign in"}
           </button>
 
           <div className="flex gap-3 justify-center items-center">
@@ -136,21 +223,27 @@ const Login = () => {
             <div className="border-b w-1/3 border-stone-300"></div>
           </div>
 
-          <div
-            className="flex items-center justify-center gap-3 p-3 border border-gray-400 rounded-lg cursor-pointer"
-            onClick={handleGoogleLogin}>
-            <img src={Google} alt="Google" className="w-5" />
-            <button
-              type="button"
-              className="text-sm text-stone-700 cursor-pointer">
-              Continue with Google
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            disabled={googleLoading}
+            className="flex items-center justify-center gap-3 p-3 border border-gray-400 rounded-lg cursor-pointer hover:bg-gray-50 transition disabled:bg-gray-100 disabled:cursor-not-allowed">
+            <img
+              src={Google || "/placeholder.svg"}
+              alt="Google"
+              className="w-5"
+            />
+            <span className="text-sm text-stone-700">
+              {googleLoading ? "Signing in..." : "Continue with Google"}
+            </span>
+          </button>
 
           <div className="mt-3 text-sm text-center text-stone-700">
-            Don’t have an account?{" "}
-            <Link to="/register" className="font-semibold text-[#242E4D]">
-              Signup
+            Dont have an account?{" "}
+            <Link
+              to="/register"
+              className="font-semibold text-[#242E4D] hover:underline">
+              Sign up
             </Link>
           </div>
         </form>
