@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { LogOut, User, Menu } from "lucide-react";
 import Logo from "./logo";
