@@ -50,7 +50,7 @@ const Blog = () => {
 
       {/* Blog post */}
       <div>
-        <div className="flex flex-wrap justify-center gap-10 mt-10 mb-20">
+        <div className="flex flex-wrap justify-center gap-10 mt-10 mb-20 px-5 lg:px-0">
           {blogs.map((blog, index) => (
             <div
               key={index}

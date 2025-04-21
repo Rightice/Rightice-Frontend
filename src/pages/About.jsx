@@ -1,4 +1,5 @@
 import "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Card from "../components/about-card";
 import Footer from "../components/Footer";
@@ -20,10 +21,11 @@ const About = () => {
           </div>
 
           {/* Text Section */}
-          <div className="lg:w-1/2 p-6 space-y-6">
+          <div className="lg:w-1/2">
             <h1 className="text-[#242D4E] font-semibold text-3xl">
               Learn More About Us
             </h1>
+            <br />
             <h1 className="text-[#BA986B] text-lg">
               Our Mission: Justice For All
             </h1>
@@ -33,28 +35,24 @@ const About = () => {
               deserves the right to legal support, regardless of their financial
               background or location.
             </p>
-
-            <h1 className="text-[#BA986B] text-lg">
-              Our Mission Statement
-            </h1>
+            <br />
+            <h1 className="text-[#BA986B] text-lg">Our Mission Statement</h1>
             <p className="text-[#242D4E] text-md">
               To empower rural communities by providing free and affordable
               legal support and human rights education.
             </p>
-
-            <h1 className="text-[#BA986B] text-lg">
-              Our Vision Statement
-            </h1>
+            <br />
+            <h1 className="text-[#BA986B] text-lg">Our Vision Statement</h1>
             <p className="text-[#242D4E] text-md">
               A society where legal rights are understood and exercised by
               everyone.
             </p>
-
+            <br />
             <div className="pt-6">
               <p className="text-[#242D4E] text-md">
-                <a href="#" className="text-[#BA986B] underline">
+                <Link to="/blog" className="text-[#BA986B] underline">
                   Click here
-                </a>{" "}
+                </Link>{" "}
                 to KNOW YOUR RIGHTS.
               </p>
             </div>
