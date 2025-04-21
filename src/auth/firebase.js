@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  updateProfile, // ✅ Add this line
 } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
@@ -30,4 +31,10 @@ const provider = new GoogleAuthProvider();
 getAnalytics(app);
 
 // Export all necessary Firebase methods
-export { auth, signInWithEmailAndPassword, signInWithPopup, provider };
+export {
+  auth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  provider,
+  updateProfile, // ✅ Add this line
+};

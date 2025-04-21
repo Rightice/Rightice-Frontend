@@ -1,45 +1,10 @@
 import "react";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import aboutImg from "../image/about.png";
-
-function Card() {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-
-  return (
-    <div className="w-3/4 mx-auto py-8">
-      <Slider {...settings}>
-        {data.map((d) => (
-          <div
-            key={d.title}
-            className="bg-white p-6 rounded-lg shadow-lg text-center">
-            {/* Image */}
-            <div className="w-32 h-32 mx-auto flex items-center justify-center bg-[#242D4E] rounded-full overflow-hidden">
-              <img
-                src={d.img}
-                className="w-24 h-24 object-cover rounded-full"
-                alt="About"
-              />
-            </div>
-
-            {/* Text */}
-            <div className="mt-4 space-y-2">
-              <h1 className="text-lg font-bold">{d.title}</h1>
-              <p className="text-gray-600">{d.info}</p>
-            </div>
-          </div>
-        ))}
-      </Slider>
-    </div>
-  );
-}
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+// import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const data = [
   {
@@ -47,6 +12,100 @@ const data = [
     info: "Support for marriage disputes, child custody, and domestic violence cases.",
     img: aboutImg,
   },
+  {
+    title: "Corporate Law",
+    info: "We offer legal support for business contracts, compliance, and disputes.",
+    img: aboutImg,
+  },
+  {
+    title: "Criminal Defense",
+    info: "Expert defense services to protect your rights in legal proceedings.",
+    img: aboutImg,
+  },
 ];
 
-export default Card;
+const NextArrow = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { onClick } = props;
+  return (
+    <div
+      className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer text-[#242D4E] bg-black/10 p-2 rounded-full"
+      onClick={onClick}>
+      <FaAngleRight className="text-3xl" />
+    </div>
+  );
+};
+
+const PrevArrow = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { onClick } = props;
+  return (
+    <div
+      className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer text-[#242D4E] bg-black/10 p-2 rounded-full"
+      onClick={onClick}>
+      <FaAngleLeft className="text-3xl" />
+    </div>
+  );
+};
+
+const CardSlider = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: false,
+    arrows: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
+  return (
+    <div className="w-full max-w-7xl mx-auto px-4 py-10">
+      <Slider {...settings}>
+        {data.map((item, index) => (
+          <SlideCard key={index} data={item} />
+        ))}
+      </Slider>
+    </div>
+  );
+};
+
+// eslint-disable-next-line react/prop-types
+const SlideCard = ({ data }) => {
+  // eslint-disable-next-line react/prop-types
+  const { title, info, img } = data;
+
+  return (
+    <div className="px-3">
+      <div className="bg-white p-6 rounded-xl shadow-md text-center h-full">
+        <div className="w-24 h-24 mx-auto mb-4 flex items-center justify-center bg-[#242D4E] rounded-full overflow-hidden">
+          <img
+            src={img}
+            alt={title || "Slider Image"}
+            className="w-20 h-20 object-cover rounded-full"
+          />
+        </div>
+        <h3 className="text-lg font-semibold text-[#242D4E]">{title}</h3>
+        <p className="text-sm text-stone-700 mt-2">{info}</p>
+      </div>
+    </div>
+  );
+};
+
+export default CardSlider;

@@ -1,76 +1,136 @@
+"use client";
+
 import { useState } from "react";
 import Lawhammer from "../image/2.jpg";
 import Logo from "../components/logo";
 import Google from "../image/Google.png";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, provider } from "../auth/firebase";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  updateProfile,
+} from "firebase/auth";
 
 const Register = () => {
   const navigate = useNavigate();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    username: "",
+    gender: "",
+    phone: "",
+    address: "",
+  });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
-    if (!email || !password) {
+    const { email, password, username, gender, phone, address } = form;
+
+    if (!email || !password || !username || !gender || !phone || !address) {
       setError("Please fill in all fields.");
+      setLoading(false);
       return;
     }
 
-    // Password check
     const passwordRegex = /^(?=.*[!@#$%^&*])(?=.*\d).{8,}$/;
     if (!passwordRegex.test(password)) {
       setError(
         "Password must be at least 8 characters long and include a number and special character."
       );
+      setLoading(false);
       return;
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/"); // Redirect to login after signup is successful
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const currentUser = userCredential.user;
+
+      // Update Firebase profile
+      await updateProfile(currentUser, {
+        displayName: username,
+      });
+
+      // Save user profile data with email-specific key
+      const localStorageKey = `userProfile_${email}`;
+      localStorage.setItem(localStorageKey, JSON.stringify(form));
+
+      // Also save to the old format for backward compatibility
+      localStorage.setItem("userProfile", JSON.stringify(form));
+
+      // Save auth user for reference
+      localStorage.setItem(
+        "authUser",
+        JSON.stringify({
+          email,
+          displayName: username,
+        })
+      );
+
+      navigate("/home");
     } catch (err) {
-      const errorCode = err.code;
-      switch (errorCode) {
-        case "auth/email-already-in-use":
-          setError("This email is already in use.");
-          break;
-        case "auth/invalid-email":
-          setError("Please enter a valid email.");
-          break;
-        case "auth/weak-password":
-          setError("Password is too weak.");
-          break;
-        default:
-          setError("Signup failed. Please try again.");
-          break;
+      console.error(err);
+      if (err.code === "auth/email-already-in-use") {
+        setError("Email is already in use. Please login instead.");
+      } else {
+        setError("Registration failed. Please try again.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleSignUp = async () => {
     setError("");
+    setLoading(true);
 
     try {
       const result = await signInWithPopup(auth, provider);
+      const user = result.user;
       const isNewUser = result._tokenResponse?.isNewUser;
 
       if (isNewUser) {
-        // New User? – keep them signed in and redirect to login
-        navigate("/");
+        // Save basic profile for new Google users
+        const userProfile = {
+          email: user.email,
+          username: user.displayName || "User",
+          profileImage: user.photoURL,
+        };
+
+        const localStorageKey = `userProfile_${user.email}`;
+        localStorage.setItem(localStorageKey, JSON.stringify(userProfile));
+        localStorage.setItem("userProfile", JSON.stringify(userProfile));
+        localStorage.setItem(
+          "authUser",
+          JSON.stringify({
+            email: user.email,
+            displayName: user.displayName,
+          })
+        );
+
+        navigate("/home");
       } else {
-        // If user already exists, sign them out and show message
         await auth.signOut();
         setError("You already have an account. Login instead.");
       }
     } catch (err) {
-      setError("Google signup failed. Please try again.");
       console.error(err);
+      setError("Google signup failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -78,7 +138,7 @@ const Register = () => {
     <div className="flex flex-col lg:flex-row h-screen">
       <div className="w-full lg:w-1/2 relative min-h-[50vh] lg:min-h-screen">
         <img
-          src={Lawhammer}
+          src={Lawhammer || "/placeholder.svg"}
           alt="Law Hammer"
           className="w-full h-full object-cover"
         />
@@ -86,8 +146,8 @@ const Register = () => {
           <Logo />
           <div className="text-white absolute inset-0 flex items-center flex-col gap-3 justify-center">
             <header className="text-3xl lg:text-5xl text-center">
-              Welcome to
-              <span className="text-[#BA986B] font-semibold"> Rightice.ng</span>
+              Welcome to{" "}
+              <span className="text-[#BA986B] font-semibold">Rightice.ng</span>
             </header>
             <p className="text-white/50">Get started by creating an account</p>
           </div>
@@ -95,46 +155,80 @@ const Register = () => {
       </div>
 
       {/* Signup Form */}
-      <div className="w-full lg:w-1/2 lg:mt-0 -mt-20 relative z-100 flex justify-center items-center p-6 lg:p-10 bg-white rounded-tl-[50px] rounded-tr-[50px] shadow-lg">
+      <div className="w-full lg:w-1/2 lg:mt-0 -mt-20 relative z-10 flex justify-center items-center p-6 lg:p-10 bg-white rounded-tl-[30px] rounded-tr-[30px] shadow-lg">
         <form
-          className="w-full max-w-md flex flex-col gap-5"
-          onSubmit={handleSignUp}>
+          onSubmit={handleSignUp}
+          className="w-full max-w-md flex flex-col gap-5">
           <h2 className="text-2xl lg:text-3xl font-bold mb-4 text-[#242E4D]">
-            Create Account
+            Create your Account
           </h2>
 
-          {/* Email input */}
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter username"
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none"
+            required
+          />
+
+          <select
+            name="gender"
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none"
+            required>
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Enter phone number"
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none"
+            required
+          />
+
+          <input
+            type="text"
+            name="address"
+            placeholder="Enter address"
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none"
+            required
+          />
+
           <input
             type="email"
+            name="email"
             placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full pb-3 border-b border-stone-300 focus:outline-none focus:border-blue-500 placeholder:text-sm focus:scale-105 transition"
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none"
             required
           />
 
-          {/* Password input */}
           <input
             type="password"
+            name="password"
             placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full pb-3 border-b border-stone-300 focus:outline-none focus:border-blue-500 placeholder:text-sm focus:scale-105 transition"
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none"
             required
           />
 
-          {/* Error message */}
           {error && (
             <p className="text-red-500 bg-red-100 p-3 rounded text-sm">
               {error}
             </p>
           )}
 
-          {/* Submit button */}
           <button
             type="submit"
-            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 cursor-pointer">
-            Sign Up
+            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 ease-in-out"
+            disabled={loading}>
+            {loading ? "Signing Up..." : "Sign Up"}
           </button>
 
           <div className="flex gap-3 justify-center items-center">
@@ -143,13 +237,20 @@ const Register = () => {
             <div className="border-b w-1/3 border-stone-300"></div>
           </div>
 
-          {/* Google Signup */}
-          <div
-            className="flex items-center justify-center gap-3 p-3 border border-gray-400 rounded-lg cursor-pointer"
-            onClick={handleGoogleSignUp}>
-            <img src={Google} alt="Google" className="w-5" />
-            <span className="text-sm text-stone-700">Sign up with Google</span>
-          </div>
+          <button
+            type="button"
+            className="flex items-center justify-center gap-3 p-3 border border-gray-400 rounded-lg cursor-pointer hover:bg-gray-50 transition duration-300 ease-in-out"
+            onClick={handleGoogleSignUp}
+            disabled={loading}>
+            <img
+              src={Google || "/placeholder.svg"}
+              alt="Google"
+              className="w-5"
+            />
+            <span className="text-sm text-stone-700">
+              {loading ? "Processing..." : "Sign up with Google"}
+            </span>
+          </button>
 
           <div className="mt-3 text-sm text-center text-stone-700">
             Already have an account?{" "}
