@@ -1,15 +1,15 @@
 import "react";
-import bg from "../image/bg.png";
+import bg from "../image/courtroom.jpg";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
-import homeImg from "../image/home.png";
+import homeImg from "../image/2.webp";
 
 const Home = () => {
   return (
     <section>
       <div
-        className="h-screen w-full lg:bg-contain lg:bg-center lg:no-repeat overflow-auto"
+        className="h-screen w-full lg:bg-cover lg:bg-center lg:no-repeat overflow-auto"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${bg})`,
         }}>
@@ -27,7 +27,7 @@ const Home = () => {
         </div>
 
         <div className="bg-white flex justify-center items-center py-10 px-6">
-          <div className="flex flex-col lg:flex-row items-center gap-10 max-w-6xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center gap-10 mx-auto">
             {/* Image Section */}
             <div className="w-full lg:w-1/2">
               <img

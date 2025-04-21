@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Lawhammer from "../image/2.jpg";
+import Lawhammer from "../image/2.webp";
 import Logo from "../components/logo";
 import Google from "../image/Google.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -226,7 +226,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 ease-in-out"
+            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 ease-in-out cursor-pointer"
             disabled={loading}>
             {loading ? "Signing Up..." : "Sign Up"}
           </button>

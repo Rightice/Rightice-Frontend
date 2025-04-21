@@ -3,14 +3,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import aboutImg from "../image/about.png";
+import family from "../image/family.webp";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-// import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const data = [
   {
     title: "Family and Divorce Law",
     info: "Support for marriage disputes, child custody, and domestic violence cases.",
-    img: aboutImg,
+    img: family,
   },
   {
     title: "Corporate Law",
@@ -94,11 +94,11 @@ const SlideCard = ({ data }) => {
   return (
     <div className="px-3">
       <div className="bg-white p-6 rounded-xl shadow-md text-center h-full">
-        <div className="w-24 h-24 mx-auto mb-4 flex items-center justify-center bg-[#242D4E] rounded-full overflow-hidden">
+        <div className="w-24 h-24 mx-auto mb-4 flex items-center justify-center rounded-full overflow-hidden">
           <img
             src={img}
             alt={title || "Slider Image"}
-            className="w-20 h-20 object-cover rounded-full"
+            className="w-48 h-48 object-cover rounded-full"
           />
         </div>
         <h3 className="text-lg font-semibold text-[#242D4E]">{title}</h3>

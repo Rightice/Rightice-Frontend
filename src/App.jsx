@@ -50,6 +50,7 @@ const App = () => {
         <Route path="/blog/family-and-domestic-law" element={<FamilyLaw />} />
         <Route path="/consultation" element={<Consultation />} />
         <Route path="/contact" element={<Contact />} />
+        {/* Dashboard */}
         <Route path="/profile" element={<Profile />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/privacy" element={<Privacy />} />

@@ -1,8 +1,8 @@
 import "react";
 import Navbar from "../components/Navbar";
-import FirstImage from "../image/Image1.png";
-import SecondImage from "../image/Image2.png";
-import ThirdImage from "../image/Image3.png";
+import FirstImage from "../image/property.webp";
+import SecondImage from "../image/employee.webp";
+import ThirdImage from "../image/family.webp";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import { FaCircleChevronRight } from "react-icons/fa6";
@@ -72,7 +72,7 @@ const Blog = () => {
                 <p className="text-sm text-[#242E4D]">{blog.description}</p>
                 <Link
                   to={blog.link}
-                  className="flex gap-3 text-[#242E4D] text-sm mt-10">
+                  className="flex gap-3 bg-[#242E4D] hover:bg-[#182038] text-white rounded w-32 p-3 text-sm mt-10">
                   {content.Blog.learnmore}
                   <FaCircleChevronRight className="mt-1" />
                 </Link>

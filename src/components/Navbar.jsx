@@ -87,7 +87,7 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-40 bg-white shadow-sm">
-      <nav className="lg:flex lg:justify-between lg:items-center lg:p-1 lg:px-10 flex justify-between pt-6 px-5 pb-4">
+      <nav className="lg:flex lg:justify-between bg-white lg:items-center lg:p-1 lg:px-10 flex justify-between pt-6 px-5 pb-4">
         {/* Logo */}
         <div className="lg:w-[40%]">
           <Logo />

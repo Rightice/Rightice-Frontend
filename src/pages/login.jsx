@@ -10,7 +10,7 @@ import {
 } from "../auth/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
-import Lawhammer from "../image/4.jpg";
+import Lawhammer from "../image/4.webp";
 import Logo from "../components/logo";
 import Google from "../image/Google.png";
 
@@ -213,7 +213,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed">
+            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer">
             {isLoading ? "Signing in..." : "Sign in"}
           </button>
 
