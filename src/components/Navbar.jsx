@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { LogOut, User, Menu } from "lucide-react";
-import Logo from "./logo";
+import Logo from "../components/logo";
 import { auth } from "../auth/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
@@ -174,9 +174,9 @@ const Navbar = () => {
             }`}>
             {/* Close Button */}
             <div className="flex justify-between items-center">
-              <Logo />
+              {/* <Logo /> */}
               <button
-                className="text-white text-3xl focus:outline-none"
+                className="text-white text-3xl focus:outline-none right-5 top-10 absolute"
                 onClick={() => setIsOpen(false)}
                 aria-label="Close menu">
                 <IoClose size={28} />
@@ -185,7 +185,7 @@ const Navbar = () => {
 
             {/* User Profile in Mobile Menu */}
             {user && (
-              <div className="mt-8 flex items-center gap-3 border-b border-white/20 pb-6">
+              <div className="mt-20 flex items-center gap-3 border-b border-white/20 pb-6">
                 <div className="w-12 h-12 rounded-full overflow-hidden bg-white/10 flex items-center justify-center">
                   {profileImage ? (
                     <img
@@ -201,12 +201,12 @@ const Navbar = () => {
                     <User className="h-6 w-6 text-white" />
                   )}
                 </div>
-                <div>
+                <Link to="/profile">
                   <p className="text-white font-medium">Welcome</p>
                   <p className="text-sm text-white/70">
-                    {user.email || username}
+                    {username}
                   </p>
-                </div>
+                </Link>
               </div>
             )}
 
@@ -241,7 +241,7 @@ const Navbar = () => {
             {user && (
               <button
                 onClick={handleLogout}
-                className="mt-auto mb-8 flex items-center gap-2 text-white bg-red-600/20 hover:bg-red-600/30 px-4 py-3 rounded-lg transition-colors">
+                className="mt-auto mb-8 flex items-center gap-2 text-white bg-red-600 w-32 hover:bg-red-600/30 px-4 py-3 rounded-lg transition-colors">
                 <LogOut size={20} />
                 <span>Logout</span>
               </button>
