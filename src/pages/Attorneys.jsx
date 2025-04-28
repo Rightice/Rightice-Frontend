@@ -134,7 +134,7 @@ const Attorneys = () => {
 
       {/* Section Header */}
       <div className="text-center my-10">
-        <p className="text-sm italic text-[#444] font-semibold">
+        <p className="text-sm italic text-[#BA986B]">
           Find the Right Legal Help for Your Needs
         </p>
         <h1 className="text-2xl sm:text-3xl font-black text-[#242D4E]">

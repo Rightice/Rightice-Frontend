@@ -1,6 +1,6 @@
 import "react";
 import { Link } from "react-router-dom";
-import Footerbg from "../image/cellbg.png";
+import Footerbg from "../image/footerimage.png";
 import content from "../../content";
 import Icon from "./Icon";
 import Logo from "./logo";
@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <section className="relative bg-[#242E4D]">
       <div
-        className="absolute right-0 top-0 h-full w-1/2 bg-cover bg-right opacity-5"
+        className="absolute right-0 top-0 h-full w-full lg:bg-contain bg-fit bg-left bg-no-repeat lg:bg-bottom opacity-10"
         style={{ backgroundImage: `url(${Footerbg})` }}></div>
 
       <div className="relative z-10 py-20 px-5 lg:px-20 lg:flex-row lg:flex lg:justify-between lg:items-center flex-col">
@@ -45,9 +45,6 @@ const Footer = () => {
             <li className="hover:text-white/50 transition ease-in-out duration-300">
               <Link to="/contact">Contact Us</Link>
             </li>
-            {/* <li className="hover:text-white/50 transition ease-in-out duration-300">
-              <Link to="/profile">Profile</Link>
-            </li> */}
           </ul>
         </div>
       </div>
@@ -63,11 +60,6 @@ const Footer = () => {
             className="underline text-sm text-white hover:text-white/50 transition ease-in-out duration-300">
             {content.Footer.privacy}
           </Link>
-          {/* <Link
-            to="/"
-            className="underline text-sm text-white hover:text-white/50 transition ease-in-out duration-300">
-            {content.Footer.terms}
-          </Link> */}
         </div>
       </div>
     </section>

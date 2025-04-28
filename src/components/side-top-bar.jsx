@@ -119,8 +119,9 @@ const Sidebar = ({ children }) => {
         </button>
 
         <nav className="flex flex-col gap-4">
-          <Link to='/home'
-            className={`pb-10 text-2xl font-semibold hover:text-white/50 ${
+          <Link
+            to="/home"
+            className={`pb-10 text-2xl font-semibold hover:text-white/50 transition ease-in-out duration-500 ${
               !isOpen && "text-center"
             }`}>
             {isOpen ? "Rightice.ng" : "R"}
@@ -159,7 +160,7 @@ const Sidebar = ({ children }) => {
                 </NavLink>
               )}
               {user && (
-                <p className="font-light text-[10px] text-white/50">
+                <p className="font-light text-[10px] text-[#BA986B]">
                   {user.email}
                 </p>
               )}

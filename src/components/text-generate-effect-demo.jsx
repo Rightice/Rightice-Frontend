@@ -5,7 +5,7 @@ const words = `We Specialize In Providing Professional And Affordable Legal Assi
 
 export default function TextGenerateEffectDemo() {
   return (
-    <div className="w-full mx-auto px-4 py-12">
+    <div className="w-full mx-auto px-4">
       <TextGenerateEffect words={words} />
     </div>
   )

@@ -203,9 +203,7 @@ const Navbar = () => {
                 </div>
                 <Link to="/profile">
                   <p className="text-white font-medium">Welcome</p>
-                  <p className="text-sm text-white/70">
-                    {username}
-                  </p>
+                  <p className="text-sm text-[#BA986B]">{username}</p>
                 </Link>
               </div>
             )}

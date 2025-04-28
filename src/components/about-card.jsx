@@ -103,7 +103,7 @@ const SlideCard = ({ data }) => {
           />
         </div>
         <h3 className="text-lg font-semibold text-[#242D4E]">{title}</h3>
-        <p className="text-sm text-stone-700 mt-2">{info}</p>
+        <p className="text-sm text-[#BA986B] mt-2">{info}</p>
       </div>
     </div>
   );
