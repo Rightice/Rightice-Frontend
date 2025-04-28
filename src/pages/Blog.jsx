@@ -72,7 +72,7 @@ const Blog = () => {
                 <p className="text-sm text-[#242E4D]">{blog.description}</p>
                 <Link
                   to={blog.link}
-                  className="flex gap-3 bg-[#242E4D] hover:bg-[#182038] text-white rounded w-32 p-3 text-sm mt-10">
+                  className="flex gap-3 bg-[#242E4D] hover:bg-[#1c233d] transition ease-in-out duration-500 text-white rounded w-32 p-3 text-sm mt-10">
                   {content.Blog.learnmore}
                   <FaCircleChevronRight className="mt-1" />
                 </Link>

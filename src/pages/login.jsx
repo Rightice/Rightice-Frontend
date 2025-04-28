@@ -92,7 +92,7 @@ const Login = () => {
           break;
         default:
           setError(
-            "Login failed. Please check your credentials and try again."
+            "Login failed. Please try again."
           );
       }
     } finally {
@@ -165,9 +165,6 @@ const Login = () => {
           </h2>
 
           <div className="space-y-1">
-            {/* <label htmlFor="email" className="text-sm text-gray-600">
-              Email Address
-            </label> */}
             <input
               id="email"
               type="email"
@@ -181,9 +178,6 @@ const Login = () => {
           </div>
 
           <div className="space-y-1">
-            {/* <label htmlFor="password" className="text-sm text-gray-600">
-              Password
-            </label> */}
             <input
               id="password"
               type="password"

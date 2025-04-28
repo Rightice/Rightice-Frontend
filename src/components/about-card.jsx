@@ -2,7 +2,8 @@ import "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import aboutImg from "../image/about.png";
+import Corporate from "../image/about.png"
+import Criminal from "../image/2.webp";
 import family from "../image/family.webp";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
@@ -15,12 +16,12 @@ const data = [
   {
     title: "Corporate Law",
     info: "We offer legal support for business contracts, compliance, and disputes.",
-    img: aboutImg,
+    img: Corporate,
   },
   {
     title: "Criminal Defense",
     info: "Expert defense services to protect your rights in legal proceedings.",
-    img: aboutImg,
+    img: Criminal,
   },
 ];
 
@@ -41,7 +42,7 @@ const PrevArrow = (props) => {
   const { onClick } = props;
   return (
     <div
-      className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer text-[#242D4E] bg-black/10 p-2 rounded-full"
+      className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer font-light text-[#242D4E] bg-black/10 p-2 rounded-full"
       onClick={onClick}>
       <FaAngleLeft className="text-3xl" />
     </div>

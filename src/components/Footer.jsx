@@ -59,15 +59,15 @@ const Footer = () => {
         <p className="text-white text-sm">{content.Footer.copyright}</p>
         <div className="flex gap-2">
           <Link
-            to="/"
+            to="/privacy"
             className="underline text-sm text-white hover:text-white/50 transition ease-in-out duration-300">
             {content.Footer.privacy}
           </Link>
-          <Link
+          {/* <Link
             to="/"
             className="underline text-sm text-white hover:text-white/50 transition ease-in-out duration-300">
             {content.Footer.terms}
-          </Link>
+          </Link> */}
         </div>
       </div>
     </section>

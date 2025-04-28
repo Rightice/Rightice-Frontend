@@ -17,11 +17,11 @@ const Payment = () => {
   ])
 
   // Sample invoices
-  const [invoices, setInvoices] = useState([
-    // { id: "INV-001", date: "2023-04-15", amount: 250.0, status: "paid", description: "Legal Consultation" },
-    // { id: "INV-002", date: "2023-05-20", amount: 500.0, status: "paid", description: "Document Preparation" },
-    // { id: "INV-003", date: "2023-06-10", amount: 350.0, status: "pending", description: "Case Review" },
-  ])
+  // const [invoices, setInvoices] = useState([
+  //   { id: "INV-001", date: "2023-04-15", amount: 250.0, status: "paid", description: "Legal Consultation" },
+  //   { id: "INV-002", date: "2023-05-20", amount: 500.0, status: "paid", description: "Document Preparation" },
+  //   { id: "INV-003", date: "2023-06-10", amount: 350.0, status: "pending", description: "Case Review" },
+  // ])
 
   // Form state for adding a new card
   const [newCard, setNewCard] = useState({

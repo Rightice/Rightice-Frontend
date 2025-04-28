@@ -9,7 +9,7 @@ const About = () => {
   return (
     <div>
       <Navbar />
-      <div className="">
+      <div>
         <div className="flex flex-col-reverse lg:flex-row justify-center gap-20 items-center px-8 py-8 space-y-6 lg:space-y-0">
           {/* Image Section */}
           <div className="lg:w-83 flex justify-center">

@@ -5,6 +5,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { GrSend } from "react-icons/gr";
 import { HiMiniUsers } from "react-icons/hi2";
 import "@fontsource/lato";
+import Form from "../components/Form";
 
 const Contact = () => {
   return (
@@ -32,7 +33,8 @@ const Contact = () => {
                 <FaPhoneAlt className="text-xl mt-1 hidden sm:block" />
                 <div>
                   <p className="font-semibold">Call us</p>
-                  <p className="text-white/60">+234 xxxxxxxxxx</p>
+                  <p className="text-white/60">+234 816 597 6800</p>
+                  <p className="text-white/60">+234 809 945 6138</p>
                 </div>
               </div>
 
@@ -40,7 +42,7 @@ const Contact = () => {
                 <GrSend className="text-xl mt-1 hidden sm:block" />
                 <div>
                   <p className="font-semibold">Email us</p>
-                  <p className="text-white/60">support@rightice.ng</p>
+                  <p className="text-white/60">righticeng@gmail.com</p>
                 </div>
               </div>
 
@@ -48,7 +50,7 @@ const Contact = () => {
                 <HiMiniUsers className="text-xl mt-1 hidden sm:block" />
                 <div>
                   <p className="font-semibold">Partnership</p>
-                  <p className="text-white/60">partners@rightice.ng</p>
+                  <p className="text-white/60">partnersrighticeng@gmail.com</p>
                 </div>
               </div>
             </div>
@@ -67,36 +69,7 @@ const Contact = () => {
             </p>
           </div>
 
-          <form className="max-w-2xl space-y-6">
-            <input
-              className="w-full border border-gray-400 rounded-lg px-4 py-3 text-base placeholder-[#242D4E] focus:outline-none"
-              type="text"
-              name="name"
-              placeholder="Full Name"
-            />
-            <input
-              className="w-full border border-gray-400 rounded-lg px-4 py-3 text-base placeholder-[#242D4E] focus:outline-none"
-              type="email"
-              name="email"
-              placeholder="Email"
-            />
-            <input
-              className="w-full border border-gray-400 rounded-lg px-4 py-3 text-base placeholder-[#242D4E] focus:outline-none"
-              type="tel"
-              name="phone"
-              placeholder="Phone Number"
-            />
-            <textarea
-              className="w-full border border-gray-400 rounded-lg px-4 py-3 text-base placeholder-[#242D4E] focus:outline-none"
-              name="message"
-              rows="5"
-              placeholder="Message"></textarea>
-            <button
-              type="submit"
-              className="bg-[#242D4E] text-white font-medium py-3 px-6 rounded-lg hover:bg-[#1c233d] transition-all duration-300 w-fit mx-auto lg:mx-0">
-              Submit
-            </button>
-          </form>
+          <Form />
         </div>
       </div>
 
