@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { IoChevronBack } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
+import { PaystackButton } from "react-paystack";
 
 // Single file lawyer booking system with payment verification
-const Consultation = () => {
+const PaymentPage = () => {
   // State for booking form
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedLawyer, setSelectedLawyer] = useState("");
@@ -15,12 +16,35 @@ const Consultation = () => {
   const [phone, setPhone] = useState("");
   const [caseDetails, setCaseDetails] = useState("");
 
+  const displayedAmount = 20000; // in Naira
+  const paystackAmount = displayedAmount * 100; // in Kobo
+
   const navigate = useNavigate();
 
   // State for modals
+
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showPaymentPage, setShowPaymentPage] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+
+  //Apikey
+  const publicKey = "pk_test_8621609a1d83f1811600e8ca1c38f1e3c1ca4fd9";
+
+  const componentProps = {
+    email,
+    amount: paystackAmount,
+    selectedDate,
+    selectedLawyer,
+    selectedTime,
+    metadata: {
+      name,
+      phone,
+    },
+    publicKey,
+    text: "Make Payment",
+    onSuccess: () => setBookingConfirmed(true),
+    onClose: () => setShowPaymentModal(false),
+  };
 
   // Mock data for available lawyers
   const LAWYERS = [
@@ -78,6 +102,7 @@ const Consultation = () => {
     setBookingConfirmed(true);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleMakePayment = () => {
     // In a real app, this would redirect to a payment processor
     setShowPaymentModal(false);
@@ -103,7 +128,7 @@ const Consultation = () => {
     const days = [];
 
     // Generate next 14 days
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 30; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
 
@@ -130,86 +155,92 @@ const Consultation = () => {
   };
 
   // PaymentRequiredModal Component
-  const PaymentRequiredModal = () => {
-    if (!showPaymentModal) return null;
+    const PaymentRequiredModal = () => {
+      if (!showPaymentModal) return null;
 
-    return (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-lg max-w-md w-full p-6">
-          <div className="flex justify-between items-start">
-            <div className="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-yellow-500"
-                viewBox="0 0 20 20"
-                fill="currentColor">
-                <path
-                  fillRule="evenodd"
-                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <h3 className="text-lg font-medium">Payment Required</h3>
+      return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-md w-full p-6">
+            <div className="flex justify-between items-start">
+              <div className="flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-yellow-500"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <h3 className="text-lg font-medium">Payment Required</h3>
+              </div>
+              <button
+                onClick={() => setShowPaymentModal(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
             </div>
-            <button
-              onClick={() => setShowPaymentModal(false)}
-              className="text-gray-500 hover:text-gray-700">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor">
-                <path
-                  fillRule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-          </div>
 
-          <div className="flex flex-col items-center justify-center py-4">
-            <div className="rounded-full bg-yellow-100 p-3 mb-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-yellow-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                />
-              </svg>
+            <div className="flex flex-col items-center justify-center py-4">
+              <div className="rounded-full bg-yellow-100 p-3 mb-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-yellow-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                  />
+                </svg>
+              </div>
+              <p className="text-center mb-2">
+                You need to complete payment before booking a consultation with
+                our lawyers.
+              </p>
+              <p className="text-sm text-gray-500 text-center">
+                This ensures commitment and helps us provide quality service to
+                all clients.
+              </p>
             </div>
-            <p className="text-center mb-2">
-              You need to complete payment before booking a consultation with
-              our lawyers.
-            </p>
-            <p className="text-sm text-gray-500 text-center">
-              This ensures commitment and helps us provide quality service to
-              all clients.
-            </p>
-          </div>
 
-          <div className="flex justify-end gap-2 mt-4">
-            <button
-              onClick={() => setShowPaymentModal(false)}
-              className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
-              Cancel
-            </button>
-            <button
-              onClick={handleMakePayment}
-              className="px-4 py-2 bg-[#242E4D] border border-transparent rounded-md text-sm font-medium text-white hover:bg-[#1a223c] cursor-pointer">
-              Proceed to Payment
-            </button>
+            <div className="flex justify-end gap-2 mt-4">
+              <button
+                onClick={() => setShowPaymentModal(false)}
+                className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+
+              <PaystackButton
+                {...componentProps}
+                disabled={!isFormValid()}
+                className="px-4 py-2 bg-[#242E4D] border border-transparent rounded-md text-sm font-medium text-white hover:bg-[#1a223c] cursor-pointer"
+              />
+            </div>
           </div>
         </div>
-      </div>
-    );
-  };
+      );
+    };
 
   // Payment Page Component
   const PaymentPage = () => {
@@ -237,136 +268,20 @@ const Consultation = () => {
                 <label className="block text-sm font-medium text-gray-700">
                   Payment Method
                 </label>
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="border-2 border-blue-600 rounded-md p-4 flex flex-col items-center bg-blue-50">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 mb-2 text-blue-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                      />
-                    </svg>
-                    <span className="text-sm">Card</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700">
-                    Name on Card
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    placeholder="John Smith"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label
-                    htmlFor="number"
-                    className="block text-sm font-medium text-gray-700">
-                    Card Number
-                  </label>
-                  <input
-                    type="text"
-                    id="number"
-                    placeholder="4242 4242 4242 4242"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
-                </div>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="month"
-                      className="block text-sm font-medium text-gray-700">
-                      Expiry Month
-                    </label>
-                    <input
-                      type="text"
-                      id="month"
-                      placeholder="MM"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="year"
-                      className="block text-sm font-medium text-gray-700">
-                      Expiry Year
-                    </label>
-                    <input
-                      type="text"
-                      id="year"
-                      placeholder="YY"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="cvc"
-                      className="block text-sm font-medium text-gray-700">
-                      CVC
-                    </label>
-                    <input
-                      type="text"
-                      id="cvc"
-                      placeholder="CVC"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-lg bg-gray-100 p-4">
-                <div className="flex items-start gap-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-green-500 mt-0.5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <div>
-                    <h4 className="text-sm font-medium">Secure Payment</h4>
-                    <p className="text-sm text-gray-500">
-                      Your payment information is encrypted and secure. We never
-                      store your full card details.
-                    </p>
-                  </div>
-                </div>
               </div>
 
               <div className="flex justify-between pt-4">
                 <button
                   type="button"
                   onClick={() => setShowPaymentPage(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#242E4D] cursor-pointer border border-transparent rounded-md text-sm font-medium text-white hover:bg-[#1a223c]">
+                  className="px-4 py-2 bg-[#242E4D] cursor-pointer border border-transparent rounded-md text-sm font-medium text-white hover:bg-[#1a223c]"
+                >
                   Pay N20,000
                 </button>
               </div>
@@ -389,7 +304,8 @@ const Consultation = () => {
               xmlns="http://www.w3.org/2000/svg"
               className="h-8 w-8 text-green-600"
               viewBox="0 0 20 20"
-              fill="currentColor">
+              fill="currentColor"
+            >
               <path
                 fillRule="evenodd"
                 d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -426,12 +342,14 @@ const Consultation = () => {
               setPhone("");
               setCaseDetails("");
             }}
-            className="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700">
+            className="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700"
+          >
             Book Another Consultation
           </button>
           <button
-            onClick={() => navigate('/home')}
-            className="px-4 py-2 ml-4 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700">
+            onClick={() => navigate("/home")}
+            className="px-4 py-2 ml-4 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700"
+          >
             Home Page
           </button>
         </div>
@@ -474,7 +392,8 @@ const Consultation = () => {
                       day.toDateString() === selectedDate.toDateString()
                         ? "bg-blue-100 border-2 border-blue-600 text-blue-800"
                         : "border border-gray-300 hover:border-blue-500 hover:bg-blue-50"
-                    }`}>
+                    }`}
+                  >
                     <div className="text-xs font-medium">
                       {day.toLocaleDateString("en-US", { weekday: "short" })}
                     </div>
@@ -502,7 +421,8 @@ const Consultation = () => {
                 <div className="space-y-2">
                   <label
                     htmlFor="lawyer"
-                    className="block text-sm font-medium text-gray-700">
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Select Lawyer
                   </label>
                   <select
@@ -510,7 +430,8 @@ const Consultation = () => {
                     value={selectedLawyer}
                     onChange={(e) => setSelectedLawyer(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    required>
+                    required
+                  >
                     <option value="">Select a lawyer</option>
                     {LAWYERS.map((lawyer) => (
                       <option key={lawyer.id} value={lawyer.id.toString()}>
@@ -524,7 +445,8 @@ const Consultation = () => {
                   <div className="space-y-2">
                     <label
                       htmlFor="time"
-                      className="block text-sm font-medium text-gray-700">
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Select Time
                     </label>
                     <select
@@ -532,7 +454,8 @@ const Consultation = () => {
                       value={selectedTime}
                       onChange={(e) => setSelectedTime(e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                      required>
+                      required
+                    >
                       <option value="">Select a time slot</option>
                       {TIME_SLOTS.map((time) => (
                         <option key={time} value={time}>
@@ -546,7 +469,8 @@ const Consultation = () => {
                 <div className="space-y-2">
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium text-gray-700">
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Full Name
                   </label>
                   <input
@@ -563,7 +487,8 @@ const Consultation = () => {
                 <div className="space-y-2">
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700">
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Email
                   </label>
                   <input
@@ -580,7 +505,8 @@ const Consultation = () => {
                 <div className="space-y-2">
                   <label
                     htmlFor="phone"
-                    className="block text-sm font-medium text-gray-700">
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Phone Number
                   </label>
                   <input
@@ -593,11 +519,36 @@ const Consultation = () => {
                     required
                   />
                 </div>
+                <div className="space-y-2">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Amount
+                  </label>
+                  {/* <input
+                    id="amount"
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    placeholder="Enter your Amount"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  /> */}
+                  <input
+                    id="amount"
+                    type="text"
+                    value={`₦${displayedAmount.toLocaleString()}`}
+                    readOnly
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
 
                 <div className="space-y-2">
                   <label
                     htmlFor="caseDetails"
-                    className="block text-sm font-medium text-gray-700">
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Case Details (Optional)
                   </label>
                   <textarea
@@ -621,7 +572,8 @@ const Consultation = () => {
                         className="h-4 w-4"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke="currentColor">
+                        stroke="currentColor"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -638,7 +590,8 @@ const Consultation = () => {
                           className="h-4 w-4"
                           fill="none"
                           viewBox="0 0 24 24"
-                          stroke="currentColor">
+                          stroke="currentColor"
+                        >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -651,7 +604,6 @@ const Consultation = () => {
                     )}
                   </div>
                 )}
-
                 <button
                   type="submit"
                   disabled={!isFormValid()}
@@ -659,7 +611,8 @@ const Consultation = () => {
                     isFormValid()
                       ? "bg-[#242E4D] hover:bg-[#1a223c] cursor-pointer"
                       : "bg-gray-400 cursor-not-allowed"
-                  }`}>
+                  }`}
+                >
                   Book Consultation
                 </button>
               </form>
@@ -676,4 +629,4 @@ const Consultation = () => {
   );
 };
 
-export default Consultation;
+export default PaymentPage;
