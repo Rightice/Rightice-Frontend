@@ -5,11 +5,11 @@ import { FaCircle, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import AttorneyOne from "../image/Attorney1.webp";
-import AttorneyTwo from "../image/Attorney2.webp";
-import AttorneyThree from "../image/Attorney3.webp";
+import AttorneyTwo from "../image/Attorney2.jpeg";
+import AttorneyThree from "../image/Attorney3.jpeg";
 import BackOfAttorney from "../image/AttorneyBG.webp";
-import AttorneyFour from "../image/Attorney4.webp";
-import AttorneyFive from "../image/Attorney5.webp";
+import AttorneyFour from "../image/Attorney4.avif";
+import AttorneyFive from "../image/Attorney5.jpeg";
 import AttorneySix from "../image/Attorney6.jpeg";
 
 const attorneys = [
@@ -27,7 +27,7 @@ const attorneys = [
   },
   {
     id: 3,
-    name: "Barr. Michael Chibuzor",
+    name: "Barr. Michael Adeniyan",
     area: "Criminal Defense",
     image: AttorneyThree,
   },
@@ -158,7 +158,7 @@ const Attorneys = () => {
             {/* Visible cards with transition */}
             <div
               className={`flex justify-center transition-transform duration-500 ease-in-out ${
-                isTransitioning ? "opacity-90" : "opacity-100"
+                isTransitioning ? "opacity-100" : "opacity-100"
               }`}
               style={{
                 transform: `translateX(calc(-${page * 100}% / ${pageCount}))`,
@@ -173,7 +173,7 @@ const Attorneys = () => {
                     <div
                       key={attorney.id}
                       className="flex-1 max-w-[300px] min-w-[250px] bg-[#1E2A47] text-white rounded-t-lg rounded-b-lg shadow-lg">
-                      <div className="p-5 text-center pb-8">
+                      <div className="p-5 text-center pb-4">
                         <a
                           href="#"
                           className="hover:text-gray-300 transition-colors duration-300">
@@ -201,7 +201,7 @@ const Attorneys = () => {
           <div className="flex justify-center items-center gap-4 mb-6 mt-10">
             <button
               onClick={prevPage}
-              className="w-10 h-10 rounded-full bg-[#1E2A47] text-white flex items-center justify-center hover:bg-[#2a3a5d] transition-colors duration-300"
+              className="w-10 h-10 rounded-full bg-[#1E2A47] text-white flex items-center justify-center hover:bg-[#2a3a5d] transition-colors duration-300 cursor-pointer"
               aria-label="Previous slide">
               <FaChevronLeft />
             </button>
@@ -225,7 +225,7 @@ const Attorneys = () => {
 
             <button
               onClick={nextPage}
-              className="w-10 h-10 rounded-full bg-[#1E2A47] text-white flex items-center justify-center hover:bg-[#2a3a5d] transition-colors duration-300"
+              className="w-10 h-10 rounded-full bg-[#1E2A47] text-white flex items-center justify-center hover:bg-[#2a3a5d] transition-colors duration-300 cursor-pointer"
               aria-label="Next slide">
               <FaChevronRight />
             </button>

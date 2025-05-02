@@ -155,92 +155,89 @@ const PaymentPage = () => {
   };
 
   // PaymentRequiredModal Component
-    const PaymentRequiredModal = () => {
-      if (!showPaymentModal) return null;
+  const PaymentRequiredModal = () => {
+    if (!showPaymentModal) return null;
 
-      return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <div className="flex justify-between items-start">
-              <div className="flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-yellow-500"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <h3 className="text-lg font-medium">Payment Required</h3>
-              </div>
-              <button
-                onClick={() => setShowPaymentModal(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
+    return (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div className="bg-white rounded-lg max-w-md w-full p-6">
+          <div className="flex justify-between items-start">
+            <div className="flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-yellow-500"
+                viewBox="0 0 20 20"
+                fill="currentColor">
+                <path
+                  fillRule="evenodd"
+                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <h3 className="text-lg font-semibold text-[#242E4D]">
+                Payment Required
+              </h3>
             </div>
+            <button
+              onClick={() => setShowPaymentModal(false)}
+              className="text-gray-500 hover:text-gray-700 cursor-pointer">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor">
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
 
-            <div className="flex flex-col items-center justify-center py-4">
-              <div className="rounded-full bg-yellow-100 p-3 mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-yellow-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                  />
-                </svg>
-              </div>
-              <p className="text-center mb-2">
-                You need to complete payment before booking a consultation with
-                our lawyers.
-              </p>
-              <p className="text-sm text-gray-500 text-center">
-                This ensures commitment and helps us provide quality service to
-                all clients.
-              </p>
+          <div className="flex flex-col items-center justify-center py-4">
+            <div className="rounded-full bg-yellow-100 p-3 mb-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-yellow-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                />
+              </svg>
             </div>
+            <p className="text-center mb-2">
+              You need to complete payment before booking a consultation with
+              our lawyers.
+            </p>
+            <p className="text-sm text-gray-500 text-center">
+              This ensures commitment and helps us provide quality service to
+              all clients.
+            </p>
+          </div>
 
-            <div className="flex justify-end gap-2 mt-4">
-              <button
-                onClick={() => setShowPaymentModal(false)}
-                className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                Cancel
-              </button>
+          <div className="flex justify-end gap-2 mt-4">
+            <button
+              onClick={() => setShowPaymentModal(false)}
+              className="px-4 py-2 border border-gray-300 cursor-pointer rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition ease-in-out duration-500">
+              Cancel
+            </button>
 
-              <PaystackButton
-                {...componentProps}
-                disabled={!isFormValid()}
-                className="px-4 py-2 bg-[#242E4D] border border-transparent rounded-md text-sm font-medium text-white hover:bg-[#1a223c] cursor-pointer"
-              />
-            </div>
+            <PaystackButton
+              {...componentProps}
+              disabled={!isFormValid()}
+              className="px-4 py-2 bg-[#242E4D] border border-transparent rounded-md text-sm font-medium text-white hover:bg-[#1a223c] transition ease-in-out duration-500 cursor-pointer"
+            />
           </div>
         </div>
-      );
-    };
+      </div>
+    );
+  };
 
   // Payment Page Component
   const PaymentPage = () => {
@@ -274,14 +271,12 @@ const PaymentPage = () => {
                 <button
                   type="button"
                   onClick={() => setShowPaymentPage(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
-                >
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#242E4D] cursor-pointer border border-transparent rounded-md text-sm font-medium text-white hover:bg-[#1a223c]"
-                >
+                  className="px-4 py-2 bg-[#242E4D] cursor-pointer border border-transparent rounded-md text-sm font-medium text-white hover:bg-[#1a223c]">
                   Pay N20,000
                 </button>
               </div>
@@ -304,8 +299,7 @@ const PaymentPage = () => {
               xmlns="http://www.w3.org/2000/svg"
               className="h-8 w-8 text-green-600"
               viewBox="0 0 20 20"
-              fill="currentColor"
-            >
+              fill="currentColor">
               <path
                 fillRule="evenodd"
                 d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -316,7 +310,7 @@ const PaymentPage = () => {
           <h2 className="text-2xl font-bold mb-2">Booking Confirmed!</h2>
           <p className="text-gray-600 mb-6">
             Your consultation has been scheduled successfully. You will receive
-            a confirmation email shortly.
+            a confirmation email with your booking details shortly.
           </p>
           <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
             <div className="grid grid-cols-2 gap-2 text-sm">
@@ -342,14 +336,12 @@ const PaymentPage = () => {
               setPhone("");
               setCaseDetails("");
             }}
-            className="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700"
-          >
+            className="px-4 py-2 bg-[#242E4D] cursor-pointer border border-transparent rounded-md text-sm font-medium text-white hover:bg-[#242E4D]">
             Book Another Consultation
           </button>
           <button
             onClick={() => navigate("/home")}
-            className="px-4 py-2 ml-4 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700"
-          >
+            className="px-4 py-2 ml-4 bg-[#242E4D] cursor-pointer border border-transparent rounded-md text-sm font-medium text-white hover:bg-[#242E4D]">
             Home Page
           </button>
         </div>
@@ -366,7 +358,7 @@ const PaymentPage = () => {
         </Link>
       </div>
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">
+        <h1 className="text-3xl text-[#242E4D] font-bold mb-6">
           Rightice.ng Legal Consultation Booking System
         </h1>
 
@@ -374,7 +366,9 @@ const PaymentPage = () => {
           {/* Calendar Card */}
           <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
             <div className="p-6 border-b border-gray-200">
-              <h2 className="text-lg font-medium">Select Consultation Date</h2>
+              <h2 className="text-lg font-semibold text-[#242E4D]">
+                Select Consultation Date
+              </h2>
               <p className="text-sm text-gray-500">
                 Choose an available date for your legal consultation. Ensure you
                 make your bookings atleast 3 days before meeting the lawyer.
@@ -392,8 +386,7 @@ const PaymentPage = () => {
                       day.toDateString() === selectedDate.toDateString()
                         ? "bg-blue-100 border-2 border-blue-600 text-blue-800"
                         : "border border-gray-300 hover:border-blue-500 hover:bg-blue-50"
-                    }`}
-                  >
+                    }`}>
                     <div className="text-xs font-medium">
                       {day.toLocaleDateString("en-US", { weekday: "short" })}
                     </div>
@@ -410,7 +403,9 @@ const PaymentPage = () => {
           {/* Booking Form Card */}
           <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
             <div className="p-6 border-b border-gray-200">
-              <h2 className="text-lg font-medium">Booking Details</h2>
+              <h2 className="text-lg font-semibold text-[#242E4D]">
+                Booking Details
+              </h2>
               <p className="text-sm text-gray-500">
                 Complete your consultation information
               </p>
@@ -421,8 +416,7 @@ const PaymentPage = () => {
                 <div className="space-y-2">
                   <label
                     htmlFor="lawyer"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                    className="block text-sm font-medium text-gray-700">
                     Select Lawyer
                   </label>
                   <select
@@ -430,8 +424,7 @@ const PaymentPage = () => {
                     value={selectedLawyer}
                     onChange={(e) => setSelectedLawyer(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  >
+                    required>
                     <option value="">Select a lawyer</option>
                     {LAWYERS.map((lawyer) => (
                       <option key={lawyer.id} value={lawyer.id.toString()}>
@@ -445,8 +438,7 @@ const PaymentPage = () => {
                   <div className="space-y-2">
                     <label
                       htmlFor="time"
-                      className="block text-sm font-medium text-gray-700"
-                    >
+                      className="block text-sm font-medium text-gray-700">
                       Select Time
                     </label>
                     <select
@@ -454,8 +446,7 @@ const PaymentPage = () => {
                       value={selectedTime}
                       onChange={(e) => setSelectedTime(e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                      required
-                    >
+                      required>
                       <option value="">Select a time slot</option>
                       {TIME_SLOTS.map((time) => (
                         <option key={time} value={time}>
@@ -469,8 +460,7 @@ const PaymentPage = () => {
                 <div className="space-y-2">
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                    className="block text-sm font-medium text-gray-700">
                     Full Name
                   </label>
                   <input
@@ -487,8 +477,7 @@ const PaymentPage = () => {
                 <div className="space-y-2">
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                    className="block text-sm font-medium text-gray-700">
                     Email
                   </label>
                   <input
@@ -505,8 +494,7 @@ const PaymentPage = () => {
                 <div className="space-y-2">
                   <label
                     htmlFor="phone"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                    className="block text-sm font-medium text-gray-700">
                     Phone Number
                   </label>
                   <input
@@ -522,8 +510,7 @@ const PaymentPage = () => {
                 <div className="space-y-2">
                   <label
                     htmlFor="phone"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                    className="block text-sm font-medium text-gray-700">
                     Amount
                   </label>
                   {/* <input
@@ -547,8 +534,7 @@ const PaymentPage = () => {
                 <div className="space-y-2">
                   <label
                     htmlFor="caseDetails"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                    className="block text-sm font-medium text-gray-700">
                     Case Details (Optional)
                   </label>
                   <textarea
@@ -572,8 +558,7 @@ const PaymentPage = () => {
                         className="h-4 w-4"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
+                        stroke="currentColor">
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -590,8 +575,7 @@ const PaymentPage = () => {
                           className="h-4 w-4"
                           fill="none"
                           viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
+                          stroke="currentColor">
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -611,8 +595,7 @@ const PaymentPage = () => {
                     isFormValid()
                       ? "bg-[#242E4D] hover:bg-[#1a223c] cursor-pointer"
                       : "bg-gray-400 cursor-not-allowed"
-                  }`}
-                >
+                  }`}>
                   Book Consultation
                 </button>
               </form>
