@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { LogOut, User, Menu } from "lucide-react";
 import Logo from "../components/logo";
@@ -13,6 +13,8 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
   const location = useLocation();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -63,13 +65,30 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
+      const email = auth.currentUser?.email;
+
       await signOut(auth);
+
+      // Clean up specific user profile data from localStorage
+      if (email) {
+        localStorage.removeItem(`userProfile_${email}`);
+      }
+
+      // Optionally, remove auth-related global flags
       localStorage.removeItem("authUser");
+
+      // Reset UI state
+      setUser(null);
+      setProfileImage(null);
       setIsOpen(false);
+
+      // Navigate to login page
+      navigate("/login", { replace: true });
     } catch (error) {
       console.error("Error signing out:", error);
     }
   };
+
 
   const username = user?.displayName || "Guest";
 
@@ -87,7 +106,7 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-40 bg-white shadow-sm">
-      <nav className="lg:flex lg:justify-between lg:items-center lg:p-1 lg:px-10 flex justify-between pt-6 px-5 pb-4">
+      <nav className="lg:flex lg:justify-between bg-white lg:items-center lg:p-1 lg:px-10 flex justify-between pt-6 px-5 pb-4">
         {/* Logo */}
         <div className="lg:w-[40%]">
           <Logo />
@@ -147,7 +166,7 @@ const Navbar = () => {
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="ml-2 p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                  className="ml-2 p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors cursor-pointer"
                   aria-label="Logout"
                   title="Logout">
                   <LogOut size={18} />
@@ -203,9 +222,7 @@ const Navbar = () => {
                 </div>
                 <Link to="/profile">
                   <p className="text-white font-medium">Welcome</p>
-                  <p className="text-sm text-white/70">
-                    {username}
-                  </p>
+                  <p className="text-sm text-[#BA986B]">{username}</p>
                 </Link>
               </div>
             )}
@@ -228,7 +245,7 @@ const Navbar = () => {
               {!user && (
                 <li className="mt-4">
                   <Link
-                    to="/"
+                    to="/login"
                     className="inline-block bg-white text-[#242E4D] px-6 py-2 rounded-lg font-medium"
                     onClick={() => setIsOpen(false)}>
                     Log in
@@ -241,7 +258,7 @@ const Navbar = () => {
             {user && (
               <button
                 onClick={handleLogout}
-                className="mt-auto mb-8 flex items-center gap-2 text-white bg-red-600 w-32 hover:bg-red-600/30 px-4 py-3 rounded-lg transition-colors">
+                className="mt-auto mb-8 flex items-center gap-2 text-white bg-red-600 w-32 hover:bg-red-600/30 px-4 py-3 rounded-lg transition-colors cursor-pointer">
                 <LogOut size={20} />
                 <span>Logout</span>
               </button>

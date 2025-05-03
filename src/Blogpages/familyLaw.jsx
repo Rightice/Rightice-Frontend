@@ -2,7 +2,7 @@ import "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FadeInWhenVisible from "../components/FadeInWhenVisible";
-import FamilyLaw from "../image/Family-Law.jpg"
+import FamilyLaw from "../image/family.webp";
 
 const FamilyLawArticle = () => {
   return (

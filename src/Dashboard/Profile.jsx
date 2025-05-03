@@ -114,10 +114,10 @@ const Profile = () => {
               <img
                 src={user.profileImage || "/placeholder.svg"}
                 alt="Profile"
-                className="w-24 h-24 rounded-full object-cover border-2 border-[#242E4D]"
+                className="w-24 h-24 rounded-full object-cover"
               />
             ) : (
-              <div className="w-24 h-24 rounded-full border-2 border-[#242E4D] bg-[#242E4D] text-white flex items-center justify-center text-4xl font-semibold">
+              <div className="w-24 h-24 rounded-full bg-[#242E4D] text-[#BA986B] flex items-center justify-center text-4xl font-semibold">
                 {username.charAt(0).toUpperCase()}
               </div>
             )}
@@ -140,7 +140,7 @@ const Profile = () => {
             <h1 className="text-3xl md:text-4xl text-[#242E4D] font-semibold">
               Hello <span>{username}</span>
             </h1>
-            <p className="font-light text-sm text-black/50">{user.email}</p>
+            <p className="font-light text-sm text-[#BA986B]">{user.email}</p>
           </div>
         </section>
 

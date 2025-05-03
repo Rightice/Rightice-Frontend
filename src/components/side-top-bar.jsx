@@ -87,12 +87,30 @@ const Sidebar = ({ children }) => {
 
   const handleLogout = async () => {
     try {
+      const email = auth.currentUser?.email;
+
       await signOut(auth);
-      navigate("/");
-    } catch (err) {
-      setError("Failed to Logout");
+
+      // Clean up specific user profile data from localStorage
+      if (email) {
+        localStorage.removeItem(`userProfile_${email}`);
+      }
+
+      // Optionally, remove auth-related global flags
+      localStorage.removeItem("authUser");
+
+      // Reset UI state
+      setUser(null);
+      setProfileImage(null);
+      setIsOpen(false);
+
+      // Navigate to login page
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.error("Error signing out:", error);
     }
   };
+
 
   const renderNavLink = (link) => (
     <NavLink
@@ -119,8 +137,9 @@ const Sidebar = ({ children }) => {
         </button>
 
         <nav className="flex flex-col gap-4">
-          <Link to='/home'
-            className={`pb-10 text-2xl font-semibold hover:text-white/50 ${
+          <Link
+            to="/home"
+            className={`pb-10 text-2xl font-semibold hover:text-white/50 transition ease-in-out duration-500 ${
               !isOpen && "text-center"
             }`}>
             {isOpen ? "Rightice.ng" : "R"}
@@ -159,7 +178,7 @@ const Sidebar = ({ children }) => {
                 </NavLink>
               )}
               {user && (
-                <p className="font-light text-[10px] text-white/50">
+                <p className="font-light text-[10px] text-[#BA986B]">
                   {user.email}
                 </p>
               )}
@@ -168,7 +187,7 @@ const Sidebar = ({ children }) => {
 
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 p-2 rounded-md hover:bg-white/10 transition-all duration-200 text-left ml-auto"
+            className="flex items-center gap-2 p-2 rounded-md hover:bg-white/10 transition-all duration-200 text-left ml-auto cursor-pointer"
             title="Logout">
             <span className="text-2xl">
               <IoLogOutOutline />

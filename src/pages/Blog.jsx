@@ -1,8 +1,8 @@
 import "react";
 import Navbar from "../components/Navbar";
-import FirstImage from "../image/Image1.png";
-import SecondImage from "../image/Image2.png";
-import ThirdImage from "../image/Image3.png";
+import FirstImage from "../image/property.webp";
+import SecondImage from "../image/employee.webp";
+import ThirdImage from "../image/family.webp";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import { FaCircleChevronRight } from "react-icons/fa6";
@@ -43,7 +43,7 @@ const Blog = () => {
       <Navbar />
       <div className="flex flex-col gap-3 justify-center items-center text-center mt-10 text-[#242E4D]">
         <h1 className="text-5xl pb-5">{content.Blog.title}</h1>
-        <p className="text-sm text-base max-w-[80%] lg:max-w-[60%] md:max-w-[90%]">
+        <p className="text-sm text-base max-w-[80%] text-[#BA986B] lg:max-w-[60%] md:max-w-[90%]">
           {content.Blog.description}
         </p>
       </div>
@@ -69,10 +69,10 @@ const Blog = () => {
                 <h1 className="font-semibold text-lg text-[#242E4D]">
                   {blog.title}
                 </h1>
-                <p className="text-sm text-[#242E4D]">{blog.description}</p>
+                <p className="text-sm text-[#BA986B]">{blog.description}</p>
                 <Link
                   to={blog.link}
-                  className="flex gap-3 text-[#242E4D] text-sm mt-10">
+                  className="flex gap-3 bg-[#242E4D] hover:bg-[#1c233d] transition ease-in-out duration-500 text-white rounded w-32 p-3 text-sm mt-10">
                   {content.Blog.learnmore}
                   <FaCircleChevronRight className="mt-1" />
                 </Link>

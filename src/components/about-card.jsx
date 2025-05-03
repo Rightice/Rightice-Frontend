@@ -2,25 +2,26 @@ import "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import aboutImg from "../image/about.png";
+import Corporate from "../image/about.png"
+import Criminal from "../image/2.webp";
+import family from "../image/family.webp";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-// import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const data = [
   {
     title: "Family and Divorce Law",
     info: "Support for marriage disputes, child custody, and domestic violence cases.",
-    img: aboutImg,
+    img: family,
   },
   {
     title: "Corporate Law",
     info: "We offer legal support for business contracts, compliance, and disputes.",
-    img: aboutImg,
+    img: Corporate,
   },
   {
     title: "Criminal Defense",
     info: "Expert defense services to protect your rights in legal proceedings.",
-    img: aboutImg,
+    img: Criminal,
   },
 ];
 
@@ -41,7 +42,7 @@ const PrevArrow = (props) => {
   const { onClick } = props;
   return (
     <div
-      className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer text-[#242D4E] bg-black/10 p-2 rounded-full"
+      className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer font-light text-[#242D4E] bg-black/10 p-2 rounded-full"
       onClick={onClick}>
       <FaAngleLeft className="text-3xl" />
     </div>
@@ -94,15 +95,15 @@ const SlideCard = ({ data }) => {
   return (
     <div className="px-3">
       <div className="bg-white p-6 rounded-xl shadow-md text-center h-full">
-        <div className="w-24 h-24 mx-auto mb-4 flex items-center justify-center bg-[#242D4E] rounded-full overflow-hidden">
+        <div className="w-24 h-24 mx-auto mb-4 flex items-center justify-center rounded-full overflow-hidden">
           <img
             src={img}
             alt={title || "Slider Image"}
-            className="w-20 h-20 object-cover rounded-full"
+            className="w-48 h-48 object-cover rounded-full"
           />
         </div>
         <h3 className="text-lg font-semibold text-[#242D4E]">{title}</h3>
-        <p className="text-sm text-stone-700 mt-2">{info}</p>
+        <p className="text-sm text-[#BA986B] mt-2">{info}</p>
       </div>
     </div>
   );

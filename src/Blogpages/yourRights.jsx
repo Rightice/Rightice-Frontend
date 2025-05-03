@@ -2,7 +2,7 @@ import "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FadeInWhenVisible from "../components/FadeInWhenVisible";
-import EmployeeImage from "../image/employee.jpg"
+import EmployeeImage from "../image/employee.webp"
 
 const EmployeeRights = () => {
   return (

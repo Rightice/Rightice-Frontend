@@ -2,7 +2,7 @@ import "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FadeInWhenVisible from "../components/FadeInWhenVisible";
-import PropertyImage from "../image/property.jpg";
+import PropertyImage from "../image/property.webp";
 
 const PropertyRights = () => {
   return (

@@ -9,7 +9,7 @@ const About = () => {
   return (
     <div>
       <Navbar />
-      <div className="">
+      <div>
         <div className="flex flex-col-reverse lg:flex-row justify-center gap-20 items-center px-8 py-8 space-y-6 lg:space-y-0">
           {/* Image Section */}
           <div className="lg:w-83 flex justify-center">
@@ -61,9 +61,10 @@ const About = () => {
 
         {/* Practice Areas Section */}
         <div className="bg-[#EFEFF7] flex flex-col gap-3 text-center text-white py-12">
-          <h1 className="text-[#242D4E] text-3xl font-bold">Our Practice</h1>
-          <p className="text-md text-base text-[#242D4E]">Our Practice Areas</p>
-          <p className="text-sm text-base text-stone-700 max-w-2xl mx-auto text-[#242D4E]">
+          <h1 className="text-[#242D4E] text-3xl font-bold">
+            Our Practice Areas
+          </h1>
+          <p className="text-lg text-base max-w-2xl mx-auto text-[#242D4E]">
             At Rightice.ng, we cover a wide range of legal issues to help
             individuals and communities access justice.
           </p>
