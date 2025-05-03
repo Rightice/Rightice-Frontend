@@ -1,6 +1,7 @@
 import "react";
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import MainPage from "./pages/MainPage";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Attorneys from "./pages/Attorneys";
@@ -18,6 +19,8 @@ import Payment from "./Dashboard/payment";
 import Privacy from "./Dashboard/privacy";
 import Settings from "./Dashboard/settings";
 import PaymentPage from "./components/paymentPage";
+// Lawyer Signup
+import LawyerSignupForm from "./pages/LawyerSignupForm";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -34,7 +37,8 @@ const App = () => {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -56,6 +60,8 @@ const App = () => {
         <Route path="/payment" element={<Payment />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/settings" element={<Settings />} />
+        {/* Lawyer Signup */}
+        <Route path="/lawyersignupform" element={<LawyerSignupForm />} />
       </Routes>
     </BrowserRouter>
   );

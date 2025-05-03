@@ -87,12 +87,30 @@ const Sidebar = ({ children }) => {
 
   const handleLogout = async () => {
     try {
+      const email = auth.currentUser?.email;
+
       await signOut(auth);
-      navigate("/");
-    } catch (err) {
-      setError("Failed to Logout");
+
+      // Clean up specific user profile data from localStorage
+      if (email) {
+        localStorage.removeItem(`userProfile_${email}`);
+      }
+
+      // Optionally, remove auth-related global flags
+      localStorage.removeItem("authUser");
+
+      // Reset UI state
+      setUser(null);
+      setProfileImage(null);
+      setIsOpen(false);
+
+      // Navigate to login page
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.error("Error signing out:", error);
     }
   };
+
 
   const renderNavLink = (link) => (
     <NavLink
@@ -169,7 +187,7 @@ const Sidebar = ({ children }) => {
 
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 p-2 rounded-md hover:bg-white/10 transition-all duration-200 text-left ml-auto"
+            className="flex items-center gap-2 p-2 rounded-md hover:bg-white/10 transition-all duration-200 text-left ml-auto cursor-pointer"
             title="Logout">
             <span className="text-2xl">
               <IoLogOutOutline />

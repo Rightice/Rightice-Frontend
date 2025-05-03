@@ -9,9 +9,10 @@ import {
   provider,
 } from "../auth/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { Eye, EyeOff } from "lucide-react"; // Import eye icons
 
 import Lawhammer from "../image/4.webp";
-import Logo from "../components/logo";
+// import Logo from "../components/logo";
 import Google from "../image/Google.png";
 
 const Login = () => {
@@ -24,6 +25,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
 
   const { email, password } = formData;
 
@@ -42,6 +44,10 @@ const Login = () => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   // Email/Password login handler
@@ -72,6 +78,9 @@ const Login = () => {
         })
       );
 
+      // Show success message (optional)
+      setError("");
+
       navigate("/home");
     } catch (err) {
       console.error(err);
@@ -91,9 +100,7 @@ const Login = () => {
           setError("Too many failed login attempts. Please try again later.");
           break;
         default:
-          setError(
-            "Login failed. Please try again."
-          );
+          setError("Login failed. Please try again.");
       }
     } finally {
       setIsLoading(false);
@@ -110,10 +117,30 @@ const Login = () => {
       const user = result.user;
 
       if (isNewUser) {
-        await auth.signOut();
-        setError("Please sign up first before signing in with Google.");
-      } else {
+        // For new users, create a basic profile
+        const userProfile = {
+          email: user.email,
+          username: user.displayName || "User",
+          profileImage: user.photoURL,
+        };
+
+        // Save user profile data
+        const localStorageKey = `userProfile_${user.email}`;
+        localStorage.setItem(localStorageKey, JSON.stringify(userProfile));
+        localStorage.setItem("userProfile", JSON.stringify(userProfile));
+
         // Save auth user for reference
+        localStorage.setItem(
+          "authUser",
+          JSON.stringify({
+            email: user.email,
+            displayName: user.displayName,
+          })
+        );
+
+        navigate("/home");
+      } else {
+        // Existing user - proceed with login
         localStorage.setItem(
           "authUser",
           JSON.stringify({
@@ -145,7 +172,7 @@ const Login = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#242E4D] to-transparent p-5 flex flex-col justify-between">
-          <Logo />
+          {/* <Logo /> */}
           <div className="text-white absolute inset-0 flex items-center justify-center">
             <header className="text-3xl lg:text-5xl text-center">
               Welcome{" "}
@@ -169,25 +196,35 @@ const Login = () => {
               id="email"
               type="email"
               name="email"
-              placeholder="Enter your email"
+              placeholder="johndoe@example.com"
               value={email}
               onChange={handleChange}
-              className="w-full pb-3 border border-stone-300 rounded px-3 py-2 focus:outline-none placeholder:text-sm"
+              className="w-full pb-3 border border-stone-300 rounded px-3 py-2 focus:outline-none placeholder:text-sm placeholder:text-black/70"
               required
             />
           </div>
 
-          <div className="space-y-1">
+          <div className="space-y-1 relative">
             <input
               id="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Enter your password"
               value={password}
               onChange={handleChange}
-              className="w-full pb-3 border border-stone-300 rounded px-3 py-2 focus:outline-none placeholder:text-sm"
+              className="w-full pb-3 border border-stone-300 rounded px-3 py-2 pr-10 focus:outline-none placeholder:text-sm placeholder:text-black/70"
               required
             />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black/70 cursor-pointer hover:text-gray-700 focus:outline-none">
+              {showPassword ? (
+                <Eye size={18} className="text-gray-500" />
+              ) : (
+                <EyeOff size={18} className="text-gray-500" />
+              )}
+            </button>
           </div>
 
           <div className="flex justify-end">
@@ -211,7 +248,7 @@ const Login = () => {
             {isLoading ? "Signing in..." : "Sign in"}
           </button>
 
-          <div className="flex gap-3 justify-center items-center">
+          {/* <div className="flex gap-3 justify-center items-center">
             <div className="border-b w-1/3 border-stone-300"></div>
             <p>or</p>
             <div className="border-b w-1/3 border-stone-300"></div>
@@ -230,13 +267,13 @@ const Login = () => {
             <span className="text-sm text-stone-700">
               {googleLoading ? "Signing in..." : "Continue with Google"}
             </span>
-          </button>
+          </button> */}
 
           <div className="mt-3 text-sm text-center text-stone-700">
-            Dont have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               to="/register"
-              className="font-semibold text-[#242E4D] hover:underline">
+              className="font-semibold text-[#242E4D]">
               Sign up
             </Link>
           </div>
