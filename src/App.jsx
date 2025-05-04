@@ -19,6 +19,7 @@ import Payment from "./Dashboard/payment";
 import Privacy from "./Dashboard/privacy";
 import Settings from "./Dashboard/settings";
 import PaymentPage from "./components/paymentPage";
+import ChangePassword from "./Dashboard/ChangePassword";
 // Lawyer Signup
 import LawyerSignupForm from "./pages/LawyerSignupForm";
 
@@ -60,6 +61,7 @@ const App = () => {
         <Route path="/payment" element={<Payment />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/changepassword" element={<ChangePassword />} />
         {/* Lawyer Signup */}
         <Route path="/lawyersignupform" element={<LawyerSignupForm />} />
       </Routes>

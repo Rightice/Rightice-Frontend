@@ -74,7 +74,7 @@ const Settings = () => {
           <h2 className="text-xl font-medium text-[#242E4D] mb-4">Security</h2>
           <div className="flex flex-col gap-4">
             <Link
-              to="/change-password"
+              to="/changepassword"
               className="flex items-center text-[#242E4D] hover:text-[#182038] transition-colors">
               <span className="border-b border-dashed border-current">
                 Change Password
