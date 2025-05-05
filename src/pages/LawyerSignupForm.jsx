@@ -4,6 +4,8 @@ import "react";
 
 import { useState, useEffect } from "react";
 import { Check, ChevronLeft, ChevronRight, Upload, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { IoChevronBack } from "react-icons/io5";
 
 export default function LawyerSignupForm() {
   const [step, setStep] = useState(0);
@@ -885,7 +887,12 @@ export default function LawyerSignupForm() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white rounded-2xl  mt-10">
+    <div className="max-w-7xl mx-auto p-6 bg-white rounded-2xl">
+      <div className="bg-black/10 p-5 rounded-full flex justify-center items-center h-10 w-10 mb-8">
+        <Link to="/">
+          <IoChevronBack className="text-2xl" />
+        </Link>
+      </div>
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gray-800">
           Lawyer Registration
