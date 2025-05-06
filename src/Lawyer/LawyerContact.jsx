@@ -1,15 +1,15 @@
 import "react";
-import Footer from "../components/Footer";
 import LawyerNavbar from "../Lawyer/LawyerNavbar";
 import { FaPhoneAlt } from "react-icons/fa";
 import { GrSend } from "react-icons/gr";
 import { HiMiniUsers } from "react-icons/hi2";
 import "@fontsource/lato";
 import Form from "../components/Form";
+import LawyerFooter from "../Lawyer/LawyerFooter";
 
 const LawyerContact = () => {
   return (
-    <div className="overflow-x-hidden font-lato">
+    <div className="overflow-x-hidden font-lato bg-[#EFEFF7]">
       <div className="text-black">
         <LawyerNavbar />
       </div>
@@ -75,7 +75,7 @@ const LawyerContact = () => {
         </div>
       </div>
 
-      <Footer />
+      <LawyerFooter />
     </div>
   );
 };

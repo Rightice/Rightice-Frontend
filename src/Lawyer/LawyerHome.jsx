@@ -36,7 +36,7 @@ const LawyerDashboard = () => {
 
   const handleButtonClick = () => {
     if (isProfileComplete) {
-      navigate("/appointments");
+      navigate("/lawyerappointments");
     } else {
       navigate("/lawyerProfile");
     }
@@ -45,7 +45,7 @@ const LawyerDashboard = () => {
   return (
     <section>
       <div
-        className="w-full lg:bg-contain lg:bg-center lg:no-repeat bg-contain bg-center no-repeat lg:overflow-auto min-h-screen"
+        className="w-full lg:bg-contain lg:bg-center lg:no-repeat bg-cover bg-center no-repeat lg:overflow-auto min-h-screen"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${bg})`,
         }}>

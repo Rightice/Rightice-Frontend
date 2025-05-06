@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import bg from "../image/AttorneyBG.webp";
 import Logo from "../components/logo";
-import FadeInWhenVisible from "../components/FadeInWhenVisible"
+import FadeInWhenVisible from "../components/FadeInWhenVisible";
 import { GoLaw } from "react-icons/go";
-// import { CiUser } from "react-icons/ci";
 
 const MainPage = () => {
   return (
@@ -22,15 +21,15 @@ const MainPage = () => {
           {/* Header section */}
           <div className="flex flex-col gap-5 text-center lg:mt-0 mt-5">
             <FadeInWhenVisible>
-              <h1 className="text-4xl md:text-6xl text-[#ffffff] font-bold typewriter">
-                Welcome to Righticeng
-              </h1>
-            </FadeInWhenVisible>
-            <FadeInWhenVisible>
-              <p className="text-[#BA986B] lg:text-lg text-sm">
-                We Empower communities by providing affordable legal support and
-                human rights education...
-              </p>
+              <div className="flex flex-col gap-5">
+                <h1 className="text-4xl md:text-6xl text-[#ffffff] font-bold typewriter">
+                  Welcome to Righticeng
+                </h1>
+                <p className="text-[#BA986B] lg:text-lg text-sm">
+                  We Empower communities by providing affordable legal support
+                  and human rights education...
+                </p>
+              </div>
             </FadeInWhenVisible>
           </div>
 
@@ -43,25 +42,11 @@ const MainPage = () => {
               <div className="flex flex-col md:flex-row gap-4 justify-center">
                 <Link
                   to="/register"
-                  className="bg-[#242E4D] text-white py-3 px-6 rounded-lg text-center hover:bg-[#1a2238] transition-colors w-full md:w-auto flex gap-2">
+                  className="bg-[#242E4D] text-white py-3 px-6 rounded-lg text-center hover:bg-[#1a2238] transition-colors md:w-auto inline-flex justify-center gap-2">
                   <GoLaw className="text-white mt-1" />
                   Get Started
                 </Link>
               </div>
-              {/* <div className="flex flex-col md:flex-row gap-4 justify-center">
-                <Link
-                  to="/lawyersignup"
-                  className="bg-[#242E4D] text-white py-3 px-6 rounded-lg text-center hover:bg-[#1a2238] transition-colors w-full md:w-auto flex gap-2">
-                  <GoLaw className="text-white mt-1" />
-                  As a Lawyer
-                </Link>
-                <Link
-                  to="/register"
-                  className="bg-[#242E4D] text-white py-3 px-6 rounded-lg text-center hover:bg-[#1a2238] transition-colors w-full md:w-auto flex gap-2">
-                  <CiUser className="text-white mt-1" />
-                  As a Customer
-                </Link>
-              </div> */}
               <div className="mt-3 text-sm text-center text-white/50">
                 Already have an account?{" "}
                 <Link to="/login" className="text-[#BA986B]">

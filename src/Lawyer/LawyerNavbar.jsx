@@ -93,8 +93,8 @@ const LawyerNavbar = () => {
 
   const navLinks = [
     { to: "/lawyerdashboard", label: "Home" },
-    { to: "/lawyerprofile", label: "Profile" },
     { to: "/lawyercontact", label: "Contact us" },
+    { to: "/lawyerprofile", label: "Profile" },
   ];
 
   const isActive = (path) => {
@@ -103,7 +103,7 @@ const LawyerNavbar = () => {
 
   return (
     <div className="z-40 bg-transparent">
-      <nav className="lg:flex lg:justify-between lg:items-center lg:p-1 lg:px-10 flex justify-between py-6 px-5 pb-4">
+      <nav className="lg:flex lg:justify-between lg:items-center lg:p-1 lg:px-10 flex justify-between py-6 px-5 pb-4 bg-black/10">
         {/* Logo */}
         <div className="lg:w-[40%]">
           <Logo />
@@ -118,14 +118,14 @@ const LawyerNavbar = () => {
         </button>
 
         {/* Desktop navbar */}
-        <ul className="hidden lg:flex gap-5 items-center text-white/70 text-sm">
+        <ul className="hidden lg:flex gap-5 items-center text-[#fff] text-sm">
           {navLinks.map((link) => (
             <li key={link.to}>
               <Link
                 to={link.to}
-                className={`hover:text-white/30 transition-colors py-2 px-1 ${
+                className={`transition-colors py-2 px-1 ${
                   isActive(link.to)
-                    ? "text-[#BA986B] font-medium border-b-2 border-[#BA986B]"
+                    ? "text-[#BA986B] border-b-2 border-[#BA986B]"
                     : ""
                 }`}>
                 {link.label}
@@ -138,7 +138,7 @@ const LawyerNavbar = () => {
               <div className="flex items-center gap-3">
                 <Link
                   to="/lawyerprofile"
-                  className="flex items-center gap-3 hover:bg-black/10 px-3 py-2 rounded-lg transition-colors">
+                  className="flex items-center gap-3 hover:bg-black/20 bg-black/5 px-3 py-2 rounded-lg transition-colors">
                   <div className="w-10 h-10 rounded-full overflow-hidden bg-[#242E4D]/10 flex items-center justify-center">
                     {profileImage ? (
                       <img

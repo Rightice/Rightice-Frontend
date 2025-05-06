@@ -88,6 +88,11 @@ const LawyerProfile = () => {
       "address",
       "barId",
       "lawFirm",
+      "experience",
+      "expertise",
+      "availableDays",
+      "consultationTypes",
+      "licenseUpload",
     ];
     return required.every((field) => data?.[field]?.trim());
   };
@@ -116,10 +121,8 @@ const LawyerProfile = () => {
     { name: "barId", label: "Bar Association ID" },
     { name: "lawFirm", label: "Law Firm Name" },
     { name: "experience", label: "Years of Experience" },
-    { name: "linkedIn", label: "LinkedIn Profile" },
     { name: "country", label: "Country" },
     { name: "state", label: "State" },
-    { name: "city", label: "City" },
     { name: "timeSlots", label: "Available Time Slots" },
   ];
 
@@ -210,7 +213,7 @@ const LawyerProfile = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {fields.map(({ name, label }) => (
               <div key={name}>
-                <label className="block text-md font-semibold text-[#242E4D] mb-2">
+                <label className="block text-md text-[#242E4D] mb-2 font-semibold">
                   {label}
                 </label>
                 {editMode ? (
@@ -219,7 +222,7 @@ const LawyerProfile = () => {
                     name={name}
                     value={user[name] || ""}
                     onChange={handleChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm text-black/70"
+                    className="w-full border border-gray-300 focus:outline-none rounded px-3 py-2 text-sm text-black/70"
                   />
                 ) : (
                   <p className="text-gray-800 border-b border-gray-200 pb-1">
@@ -231,7 +234,7 @@ const LawyerProfile = () => {
 
             {multiSelects.map(({ name, label, options }) => (
               <div key={name}>
-                <label className="block text-md font-semibold text-[#242E4D] mb-2">
+                <label className="block text-md text-[#242E4D] mb-2 font-semibold">
                   {label}
                 </label>
                 {editMode ? (
@@ -242,7 +245,7 @@ const LawyerProfile = () => {
                             key={opt.value}
                             type="button"
                             onClick={() => handleMultiSelect(name, opt.value)}
-                            className={`px-3 py-1.5 rounded-md text-sm flex items-center gap-1.5 ${
+                            className={`px-3 py-1.5 rounded-md text-sm flex items-center gap-1.5 cursor-pointer ${
                               (user[name] || []).includes(opt.value)
                                 ? "bg-[#242E4D] text-white"
                                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -259,7 +262,7 @@ const LawyerProfile = () => {
                             key={opt}
                             type="button"
                             onClick={() => handleMultiSelect(name, opt)}
-                            className={`px-3 py-1.5 rounded-md text-sm flex items-center gap-1.5 ${
+                            className={`px-3 py-1.5 rounded-md text-sm flex items-center gap-1.5 cursor-pointer ${
                               (user[name] || []).includes(opt)
                                 ? "bg-[#242E4D] text-white"
                                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -299,7 +302,7 @@ const LawyerProfile = () => {
             ))}
 
             <div>
-              <label className="block text-md font-semibold text-[#242E4D] mb-2">
+              <label className="block text-md font-semibold text-[#242E4D] mb-2 font-semibold">
                 Upload License
               </label>
               {editMode ? (
@@ -322,13 +325,13 @@ const LawyerProfile = () => {
             {editMode ? (
               <button
                 onClick={handleUpdate}
-                className="flex items-center gap-2 text-white bg-[#242E4D] px-6 py-2 rounded hover:bg-[#182038]">
+                className="flex items-center gap-2 text-white bg-[#242E4D] text-sm cursor-pointer px-6 py-3 rounded hover:bg-[#182038]">
                 <Save className="w-4 h-4" /> Save Profile
               </button>
             ) : (
               <button
                 onClick={toggleEdit}
-                className="flex items-center gap-2 text-white bg-[#242E4D] px-6 py-2 rounded hover:bg-[#182038]">
+                className="flex items-center gap-2 text-white bg-[#242E4D] text-sm cursor-pointer px-6 py-3 rounded hover:bg-[#182038]">
                 <Edit className="w-4 h-4" /> Edit Profile
               </button>
             )}
