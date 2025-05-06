@@ -23,7 +23,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [agreed, setAgreed] = useState(false);
-  const [selectedRole, setSelectedRole] = useState(""); // for UI feedback
+  const [selectedRole, setSelectedRole] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;

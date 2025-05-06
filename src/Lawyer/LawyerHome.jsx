@@ -1,8 +1,47 @@
 import "react";
 import LawyerNavbar from "./LawyerNavbar";
 import bg from "../image/lawyerbg.jpg";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const LawyerDashboard = () => {
+  const navigate = useNavigate();
+  const [isProfileComplete, setIsProfileComplete] = useState(false);
+
+  const checkProfileCompletion = () => {
+    const user = JSON.parse(localStorage.getItem("authUser"));
+    if (user?.email) {
+      const profile = JSON.parse(
+        localStorage.getItem(`userProfile_${user.email}`)
+      );
+      const requiredFields = [
+        "username",
+        "email",
+        "gender",
+        "phone",
+        "address",
+        "barId",
+        "lawFirm",
+      ];
+      const complete = requiredFields.every((field) => profile?.[field]);
+      setIsProfileComplete(complete);
+    }
+  };
+
+  useEffect(() => {
+    checkProfileCompletion();
+    window.addEventListener("storage", checkProfileCompletion);
+    return () => window.removeEventListener("storage", checkProfileCompletion);
+  }, []);
+
+  const handleButtonClick = () => {
+    if (isProfileComplete) {
+      navigate("/appointments");
+    } else {
+      navigate("/lawyerProfile");
+    }
+  };
+
   return (
     <section>
       <div
@@ -21,8 +60,12 @@ const LawyerDashboard = () => {
             offering consultations, manage cases, and connect with clients.
           </p>
           <div className="mt-6">
-            <button className="bg-[#BA986B] px-6 py-3 rounded-md hover:bg-[#a57e54] transition-colors duration-300">
-              Complete your profile
+            <button
+              onClick={handleButtonClick}
+              className="bg-[#BA986B] px-6 py-3 rounded-md hover:bg-[#a57e54] transition-colors duration-300">
+              {isProfileComplete
+                ? "View Appointments"
+                : "Complete your profile"}
             </button>
           </div>
         </div>

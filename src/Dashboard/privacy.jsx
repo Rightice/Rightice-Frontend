@@ -6,7 +6,7 @@ import { ChevronDown, ChevronUp, Shield } from "lucide-react";
 
 const Privacy = () => {
   const [expandedSections, setExpandedSections] = useState({
-    information: true,
+    information: false,
     use: false,
     sharing: false,
     rights: false,
@@ -54,7 +54,6 @@ const Privacy = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          {/* <p className="text-gray-700">Last Updated: April 20, 2025</p> */}
           <p className="mt-4 text-gray-700">
             Welcome to Rightice.ng. We are committed
             to protecting your privacy and ensuring the security of your
@@ -339,8 +338,8 @@ const Privacy = () => {
           </p>
           <div className="mb-4 text-gray-700">
             <p>Rightice.ng Legal Services</p>
-            <p>Email: privacy@rightice.ng</p>
-            <p>Phone: +234 123 456 7890</p>
+            <p>Email: righticeng@gmail.ng</p>
+            <p>Phone: +234 802 581 8186</p>
             <p>Address: 123 Legal Avenue, Lagos, Nigeria</p>
           </div>
           <p className="mb-4 text-gray-700">

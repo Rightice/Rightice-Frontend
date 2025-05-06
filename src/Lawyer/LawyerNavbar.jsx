@@ -92,11 +92,11 @@ const LawyerNavbar = () => {
   const username = user?.displayName || "Guest";
 
   const navLinks = [
-    { to: "/home", label: "Home" },
+    { to: "/lawyerdashboard", label: "Home" },
     { to: "/lawyerprofile", label: "Profile" },
     // { to: "/attorneys", label: "Attorneys" },
     // { to: "/blog", label: "Blog" },
-    { to: "/contact", label: "Contact us" },
+    { to: "/lawyercontact", label: "Contact us" },
   ];
 
   const isActive = (path) => {
@@ -127,7 +127,7 @@ const LawyerNavbar = () => {
                 to={link.to}
                 className={`hover:text-white/30 transition-colors py-2 px-1 ${
                   isActive(link.to)
-                    ? "text-[#242D4E] font-medium border-b-2 border-[#242D4E]"
+                    ? "text-[#BA986B] font-medium border-b-2 border-[#BA986B]"
                     : ""
                 }`}>
                 {link.label}
@@ -139,7 +139,7 @@ const LawyerNavbar = () => {
             {user ? (
               <div className="flex items-center gap-3">
                 <Link
-                  to="/profile"
+                  to="/lawyerprofile"
                   className="flex items-center gap-3 hover:bg-black/10 px-3 py-2 rounded-lg transition-colors">
                   <div className="w-10 h-10 rounded-full overflow-hidden bg-[#242E4D]/10 flex items-center justify-center">
                     {profileImage ? (
