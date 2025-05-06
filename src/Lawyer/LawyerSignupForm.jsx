@@ -94,19 +94,6 @@ export default function LawyerSignupForm() {
     "Bankruptcy",
   ];
 
-  // const languageOptions = [
-  //   "English",
-  //   "Spanish",
-  //   "French",
-  //   "German",
-  //   "Chinese",
-  //   "Arabic",
-  //   "Russian",
-  //   "Portuguese",
-  //   "Japanese",
-  //   "Hindi",
-  // ];
-
   useEffect(() => {
     // Check if passwords match
     if (formData.confirmPassword) {

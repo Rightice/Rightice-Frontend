@@ -45,7 +45,7 @@ const LawyerDashboard = () => {
   return (
     <section>
       <div
-        className="w-full bg-cover bg-center no-repeat overflow-auto min-h-screen"
+        className="w-full lg:bg-contain lg:bg-center lg:no-repeat bg-contain bg-center no-repeat lg:overflow-auto min-h-screen"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${bg})`,
         }}>
@@ -62,7 +62,7 @@ const LawyerDashboard = () => {
           <div className="mt-6">
             <button
               onClick={handleButtonClick}
-              className="bg-[#BA986B] px-6 py-3 rounded-md hover:bg-[#a57e54] transition-colors duration-300">
+              className="bg-[#BA986B] px-6 py-3 rounded-md hover:bg-[#a57e54] transition-colors duration-300 cursor-pointer">
               {isProfileComplete
                 ? "View Appointments"
                 : "Complete your profile"}

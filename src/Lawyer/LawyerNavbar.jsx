@@ -94,8 +94,6 @@ const LawyerNavbar = () => {
   const navLinks = [
     { to: "/lawyerdashboard", label: "Home" },
     { to: "/lawyerprofile", label: "Profile" },
-    // { to: "/attorneys", label: "Attorneys" },
-    // { to: "/blog", label: "Blog" },
     { to: "/lawyercontact", label: "Contact us" },
   ];
 

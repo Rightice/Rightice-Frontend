@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import LawyerSidebar from "../Lawyer/LawyerSidebar";
-import { FaEdit, FaSave } from "react-icons/fa";
+import { Edit, Save, Check } from "lucide-react";
 import Swal from "sweetalert2";
 
-// Get current user email from auth
 const getCurrentUserEmail = () => {
   const user = JSON.parse(localStorage.getItem("authUser"));
   return user?.email || null;
@@ -16,25 +15,22 @@ const LawyerProfile = () => {
   const [editMode, setEditMode] = useState(false);
   const [currentEmail, setCurrentEmail] = useState(getCurrentUserEmail());
 
-  // Load user profile data
   useEffect(() => {
     const loadUserProfile = () => {
       const email = getCurrentUserEmail();
       setCurrentEmail(email);
-
       if (email) {
-        const localStorageKey = `userProfile_${email}`;
-        const storedUser = JSON.parse(localStorage.getItem(localStorageKey));
-
-        if (storedUser) {
-          setUser(storedUser);
+        const key = `userProfile_${email}`;
+        const stored = JSON.parse(localStorage.getItem(key));
+        if (stored) {
+          setUser(stored);
         } else {
-          const oldProfile = JSON.parse(
+          const legacy = JSON.parse(
             localStorage.getItem("userProfile") || "{}"
           );
-          if (Object.keys(oldProfile).length > 0) {
-            setUser(oldProfile);
-            localStorage.setItem(localStorageKey, JSON.stringify(oldProfile));
+          if (Object.keys(legacy).length > 0) {
+            setUser(legacy);
+            localStorage.setItem(key, JSON.stringify(legacy));
           }
         }
       }
@@ -42,60 +38,58 @@ const LawyerProfile = () => {
 
     loadUserProfile();
 
-    const authUnsubscribe = () => {
-      const interval = setInterval(() => {
-        const newEmail = getCurrentUserEmail();
-        if (newEmail !== currentEmail) {
-          loadUserProfile();
-        }
-      }, 1000);
+    const interval = setInterval(() => {
+      const newEmail = getCurrentUserEmail();
+      if (newEmail !== currentEmail) loadUserProfile();
+    }, 1000);
 
-      return () => clearInterval(interval);
-    };
-
-    const unsubscribe = authUnsubscribe();
-    return () => unsubscribe();
+    return () => clearInterval(interval);
   }, [currentEmail]);
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    const { name, value, type, checked, files } = e.target;
+    if (type === "checkbox") {
+      setUser({ ...user, [name]: checked });
+    } else if (type === "file") {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUser({ ...user, [name]: reader.result });
+      };
+      reader.readAsDataURL(files[0]);
+    } else {
+      setUser({ ...user, [name]: value });
+    }
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  const handleMultiSelect = (field, value) => {
+    const currentValues = user[field] || [];
+    const newValues = currentValues.includes(value)
+      ? currentValues.filter((item) => item !== value)
+      : [...currentValues, value];
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const updatedUser = { ...user, profileImage: reader.result };
-      setUser(updatedUser);
-      saveUserProfile(updatedUser);
-    };
-    reader.readAsDataURL(file);
+    setUser({ ...user, [field]: newValues });
   };
 
-  const saveUserProfile = (userData) => {
+  const saveUserProfile = (data) => {
     if (currentEmail) {
-      const localStorageKey = `userProfile_${currentEmail}`;
-      localStorage.setItem(localStorageKey, JSON.stringify(userData));
-      localStorage.setItem("userProfile", JSON.stringify(userData));
-
+      const key = `userProfile_${currentEmail}`;
+      localStorage.setItem(key, JSON.stringify(data));
+      localStorage.setItem("userProfile", JSON.stringify(data));
       window.dispatchEvent(new Event("profileUpdated"));
       window.dispatchEvent(new Event("storage"));
     }
   };
 
   const isProfileComplete = (data) => {
-    const requiredFields = [
+    const required = [
       "username",
       "email",
-      "gender",
       "phone",
       "address",
       "barId",
       "lawFirm",
     ];
-    return requiredFields.every((field) => data?.[field]?.trim());
+    return required.every((field) => data?.[field]?.trim());
   };
 
   const handleUpdate = () => {
@@ -113,25 +107,62 @@ const LawyerProfile = () => {
 
   const toggleEdit = () => setEditMode(!editMode);
 
-  const username = user?.username || "Guest";
-
   const fields = [
     { name: "username", label: "Username" },
     { name: "email", label: "Email" },
     { name: "gender", label: "Gender" },
     { name: "phone", label: "Phone" },
     { name: "address", label: "Address" },
+    { name: "barId", label: "Bar Association ID" },
+    { name: "lawFirm", label: "Law Firm Name" },
+    { name: "experience", label: "Years of Experience" },
+    { name: "linkedIn", label: "LinkedIn Profile" },
+    { name: "country", label: "Country" },
+    { name: "state", label: "State" },
+    { name: "city", label: "City" },
+    { name: "timeSlots", label: "Available Time Slots" },
+  ];
+
+  const multiSelects = [
     {
-      name: "barId",
-      label: "Bar Association ID",
-      placeholder: "BAR12345678",
+      name: "expertise",
+      label: "Areas of Expertise",
+      options: [
+        "Family Law",
+        "Criminal Law",
+        "Corporate Law",
+        "Intellectual Property",
+        "Real Estate",
+        "Immigration",
+        "Tax Law",
+        "Labor Law",
+        "Environmental Law",
+        "Bankruptcy",
+      ],
     },
     {
-      name: "lawFirm",
-      label: "Law Firm Name",
-      placeholder: "Smith & Associates",
+      name: "languages",
+      label: "Languages Spoken",
+      options: [
+        { value: "English", flag: "🇬🇧" },
+        { value: "French", flag: "🇫🇷" },
+        { value: "Spanish", flag: "🇪🇸" },
+        { value: "German", flag: "🇩🇪" },
+      ],
+    },
+    {
+      name: "availableDays",
+      label: "Available Days",
+      options: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    },
+    {
+      name: "consultationTypes",
+      label: "Consultation Types",
+      options: ["In-Person", "Video-call", "Phone-call", "Chat"],
     },
   ];
+
+  const username = user?.username || "Guest";
 
   return (
     <LawyerSidebar>
@@ -154,14 +185,15 @@ const LawyerProfile = () => {
 
             <label className="mt-3 flex items-center gap-2 cursor-pointer text-blue-600">
               <span className="text-[#242E4D] text-sm flex gap-1">
-                <FaEdit className="mt-1" />
+                <Edit className="w-4 h-4 mt-1" />
                 Edit profile picture
               </span>
               <input
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={handleImageUpload}
+                name="profileImage"
+                onChange={handleChange}
               />
             </label>
           </div>
@@ -187,8 +219,7 @@ const LawyerProfile = () => {
                     name={name}
                     value={user[name] || ""}
                     onChange={handleChange}
-                    required
-                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none text-black/70 text-sm"
+                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm text-black/70"
                   />
                 ) : (
                   <p className="text-gray-800 border-b border-gray-200 pb-1">
@@ -197,20 +228,108 @@ const LawyerProfile = () => {
                 )}
               </div>
             ))}
+
+            {multiSelects.map(({ name, label, options }) => (
+              <div key={name}>
+                <label className="block text-md font-semibold text-[#242E4D] mb-2">
+                  {label}
+                </label>
+                {editMode ? (
+                  <div className="flex flex-wrap gap-2">
+                    {name === "languages"
+                      ? options.map((opt) => (
+                          <button
+                            key={opt.value}
+                            type="button"
+                            onClick={() => handleMultiSelect(name, opt.value)}
+                            className={`px-3 py-1.5 rounded-md text-sm flex items-center gap-1.5 ${
+                              (user[name] || []).includes(opt.value)
+                                ? "bg-[#242E4D] text-white"
+                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                            }`}>
+                            <span>{opt.flag}</span>
+                            <span>{opt.value}</span>
+                            {(user[name] || []).includes(opt.value) && (
+                              <Check className="w-3.5 h-3.5" />
+                            )}
+                          </button>
+                        ))
+                      : options.map((opt) => (
+                          <button
+                            key={opt}
+                            type="button"
+                            onClick={() => handleMultiSelect(name, opt)}
+                            className={`px-3 py-1.5 rounded-md text-sm flex items-center gap-1.5 ${
+                              (user[name] || []).includes(opt)
+                                ? "bg-[#242E4D] text-white"
+                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                            }`}>
+                            {opt}
+                            {(user[name] || []).includes(opt) && (
+                              <Check className="w-3.5 h-3.5" />
+                            )}
+                          </button>
+                        ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-800 border-b border-gray-200 pb-1">
+                    {name === "languages" ? (
+                      <span>
+                        {(user[name] || [])
+                          .map((lang) => {
+                            const langObj = options.find(
+                              (opt) => opt.value === lang
+                            );
+                            return langObj ? (
+                              <span key={lang} className="mr-2">
+                                {langObj.flag} {lang}
+                              </span>
+                            ) : null;
+                          })
+                          .filter(Boolean).length > 0
+                          ? null
+                          : "—"}
+                      </span>
+                    ) : (
+                      (user[name] || []).join(", ") || "—"
+                    )}
+                  </p>
+                )}
+              </div>
+            ))}
+
+            <div>
+              <label className="block text-md font-semibold text-[#242E4D] mb-2">
+                Upload License
+              </label>
+              {editMode ? (
+                <input
+                  type="file"
+                  name="licenseUpload"
+                  accept="application/pdf,image/*"
+                  onChange={handleChange}
+                  className="w-full"
+                />
+              ) : (
+                <p className="text-gray-800">
+                  {user.licenseUpload ? "Uploaded" : "—"}
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="mt-8">
             {editMode ? (
               <button
                 onClick={handleUpdate}
-                className="flex items-center gap-2 text-white bg-[#242E4D] px-6 py-2 rounded cursor-pointer hover:bg-[#182038] transition ease-in-out duration-300">
-                <FaSave /> Save Profile
+                className="flex items-center gap-2 text-white bg-[#242E4D] px-6 py-2 rounded hover:bg-[#182038]">
+                <Save className="w-4 h-4" /> Save Profile
               </button>
             ) : (
               <button
                 onClick={toggleEdit}
-                className="flex items-center gap-2 text-white bg-[#242E4D] px-6 py-2 rounded cursor-pointer hover:bg-[#182038] transition ease-in-out duration-300">
-                <FaEdit /> Edit Profile
+                className="flex items-center gap-2 text-white bg-[#242E4D] px-6 py-2 rounded hover:bg-[#182038]">
+                <Edit className="w-4 h-4" /> Edit Profile
               </button>
             )}
           </div>
