@@ -2,16 +2,10 @@
 
 import { useState } from "react";
 import Lawhammer from "../image/2.webp";
-// import Logo from "../components/logo";
-// import Google from "../image/Google.png";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, provider } from "../auth/firebase";
-import {
-  createUserWithEmailAndPassword,
-  // signInWithPopup,
-  updateProfile,
-} from "firebase/auth";
-import { Eye, EyeOff } from "lucide-react"; // Import eye icons
+import { auth } from "../auth/firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { Eye, EyeOff } from "lucide-react";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -22,13 +16,21 @@ const Register = () => {
     gender: "",
     phone: "",
     address: "",
+    role: "",
   });
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(""); // for UI feedback
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    if (name === "role") {
+      setSelectedRole(value);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -40,9 +42,17 @@ const Register = () => {
     setError("");
     setLoading(true);
 
-    const { email, password, username, gender, phone, address } = form;
+    const { email, password, username, gender, phone, address, role } = form;
 
-    if (!email || !password || !username || !gender || !phone || !address) {
+    if (
+      !email ||
+      !password ||
+      !username ||
+      !gender ||
+      !phone ||
+      !address ||
+      !role
+    ) {
       setError("Please fill in all fields.");
       setLoading(false);
       return;
@@ -65,35 +75,28 @@ const Register = () => {
       );
       const currentUser = userCredential.user;
 
-      // Update Firebase profile
       await updateProfile(currentUser, {
         displayName: username,
       });
 
-      // Save user profile data with email-specific key
       const localStorageKey = `userProfile_${email}`;
       localStorage.setItem(localStorageKey, JSON.stringify(form));
-
-      // Also save to the old format for backward compatibility
       localStorage.setItem("userProfile", JSON.stringify(form));
-
-      // Save auth user for reference
       localStorage.setItem(
         "authUser",
         JSON.stringify({
           email,
           displayName: username,
+          role,
         })
       );
 
-      // Sign out the user after registration
       await auth.signOut();
 
-      // Show success message
       setError("");
       alert("Registration successful! Please login with your credentials.");
 
-      // Navigate to login page
+      // ✅ Navigate to login page after successful signup
       navigate("/login");
     } catch (err) {
       console.error(err);
@@ -107,57 +110,6 @@ const Register = () => {
     }
   };
 
-  // const handleGoogleSignUp = async () => {
-  //   setError("");
-  //   setLoading(true);
-
-  //   try {
-  //     const result = await signInWithPopup(auth, provider);
-  //     const user = result.user;
-  //     const isNewUser = result._tokenResponse?.isNewUser;
-
-  //     if (isNewUser) {
-  //       // Save basic profile for new Google users
-  //       const userProfile = {
-  //         email: user.email,
-  //         username: user.displayName || "User",
-  //         profileImage: user.photoURL,
-  //       };
-
-  //       const localStorageKey = `userProfile_${user.email}`;
-  //       localStorage.setItem(localStorageKey, JSON.stringify(userProfile));
-  //       localStorage.setItem("userProfile", JSON.stringify(userProfile));
-  //       localStorage.setItem(
-  //         "authUser",
-  //         JSON.stringify({
-  //           email: user.email,
-  //           displayName: user.displayName,
-  //         })
-  //       );
-
-  //       // Sign out after registration
-  //       await auth.signOut();
-
-  //       // Show success message
-  //       alert("Google signup successful! Please login to continue.");
-
-  //       // Navigate to login page
-  //       navigate("/");
-  //     } else {
-  //       await auth.signOut();
-  //       setError("You already have an account. Login instead.");
-  //       setTimeout(() => {
-  //         navigate("/");
-  //       }, 2000);
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     setError("Google signup failed. Please try again.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       <div className="w-full lg:w-1/2 relative min-h-[50vh] lg:min-h-screen">
@@ -167,18 +119,15 @@ const Register = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#242E4D] to-transparent p-5 flex flex-col justify-between">
-          {/* <Logo /> */}
           <div className="text-white absolute inset-0 flex items-center flex-col gap-3 justify-center">
             <header className="text-3xl lg:text-5xl text-center">
               Welcome to{" "}
               <span className="text-[#BA986B] font-semibold">Rightice.ng</span>
             </header>
-            {/* <p className="text-white/50">Get started by creating an account</p> */}
           </div>
         </div>
       </div>
 
-      {/* Signup Form */}
       <div className="w-full lg:w-1/2 lg:mt-0 -mt-20 relative z-10 flex justify-center items-center p-6 lg:p-10 bg-white rounded-tl-[30px] rounded-tr-[30px] shadow-lg">
         <form
           onSubmit={handleSignUp}
@@ -196,14 +145,13 @@ const Register = () => {
               name="username"
               placeholder="John Doe"
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
               required
             />
-
             <select
               name="gender"
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-sm"
               required>
               <option value="">Select Gender</option>
               <option value="male">Male</option>
@@ -217,18 +165,39 @@ const Register = () => {
               name="phone"
               placeholder="+234 802 645 4589"
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
               required
             />
-
             <input
               type="email"
               name="email"
               placeholder="johndoe@example.com"
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
               required
             />
+          </div>
+
+          <div>
+            <p className="text-sm text-black/70 mb-1">Signup as ?</p>
+            <div className="flex gap-4">
+              {["lawyer", "customer"].map((roleOption) => (
+                <button
+                  type="button"
+                  key={roleOption}
+                  onClick={() => {
+                    setForm((prev) => ({ ...prev, role: roleOption }));
+                    setSelectedRole(roleOption);
+                  }}
+                  className={`px-4 py-2 rounded-lg border ${
+                    selectedRole === roleOption
+                      ? "bg-[#242E4D] text-white"
+                      : "bg-white text-black border-gray-300"
+                  }`}>
+                  {roleOption.charAt(0).toUpperCase() + roleOption.slice(1)}
+                </button>
+              ))}
+            </div>
           </div>
 
           <input
@@ -236,7 +205,7 @@ const Register = () => {
             name="address"
             placeholder="Address"
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
             required
           />
 
@@ -246,7 +215,7 @@ const Register = () => {
               name="password"
               placeholder="Password"
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:outline-none placeholder:text-black/70"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
               required
             />
             <button
@@ -267,33 +236,32 @@ const Register = () => {
             </p>
           )}
 
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="terms"
+              checked={agreed}
+              onChange={() => setAgreed((prev) => !prev)}
+            />
+            <label htmlFor="terms" className="text-sm text-black/70">
+              I agree to the{" "}
+              <Link to="/termsandcondition" className="text-blue-700 underline">
+                terms and conditions
+              </Link>{" "}
+              of Rightice.ng
+            </label>
+          </div>
+
           <button
             type="submit"
-            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 ease-in-out cursor-pointer"
-            disabled={loading}>
+            className={`w-full py-3 rounded-lg transition duration-300 ease-in-out cursor-pointer ${
+              agreed
+                ? "bg-[#242E4D] text-white hover:bg-[#1a223c]"
+                : "bg-gray-400 text-white cursor-not-allowed"
+            }`}
+            disabled={loading || !agreed}>
             {loading ? "Signing Up..." : "Sign Up"}
           </button>
-
-          {/* <div className="flex gap-3 justify-center items-center">
-            <div className="border-b w-1/3 border-stone-300"></div>
-            <p>or</p>
-            <div className="border-b w-1/3 border-stone-300"></div>
-          </div> */}
-
-          {/* <button
-            type="button"
-            className="flex items-center justify-center gap-3 p-3 border border-gray-400 rounded-lg cursor-pointer hover:bg-gray-50 transition duration-300 ease-in-out"
-            onClick={handleGoogleSignUp}
-            disabled={loading}>
-            <img
-              src={Google || "/placeholder.svg"}
-              alt="Google"
-              className="w-5"
-            />
-            <span className="text-sm text-stone-700">
-              {loading ? "Processing..." : "Sign up with Google"}
-            </span>
-          </button> */}
 
           <div className="mt-3 text-sm text-center text-black/70">
             Already have an account?{" "}

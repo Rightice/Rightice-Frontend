@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
-  updateProfile, // ✅ Add this line
+  updateProfile,
 } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
@@ -36,5 +36,5 @@ export {
   signInWithEmailAndPassword,
   signInWithPopup,
   provider,
-  updateProfile, // ✅ Add this line
+  updateProfile,
 };

@@ -20,7 +20,9 @@ import Privacy from "./Dashboard/privacy";
 import Settings from "./Dashboard/settings";
 import PaymentPage from "./components/paymentPage";
 // Lawyer Signup
-import LawyerSignupForm from "./pages/LawyerSignupForm";
+// import LawyerRegister from "./pages/LawyerRegister";
+import LawyerDashboard from "./Lawyer/LawyerHome";
+import Termsandcondition from "./pages/termsandcondition";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -61,7 +63,8 @@ const App = () => {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/settings" element={<Settings />} />
         {/* Lawyer Signup */}
-        <Route path="/lawyersignupform" element={<LawyerSignupForm />} />
+        <Route path="/lawyerdashboard" element={<LawyerDashboard />} />
+        <Route path="/termsandcondition" element={<Termsandcondition />} />
       </Routes>
     </BrowserRouter>
   );

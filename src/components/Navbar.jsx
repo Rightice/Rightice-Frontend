@@ -89,7 +89,6 @@ const Navbar = () => {
     }
   };
 
-
   const username = user?.displayName || "Guest";
 
   const navLinks = [

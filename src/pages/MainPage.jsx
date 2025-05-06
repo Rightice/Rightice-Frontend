@@ -3,7 +3,7 @@ import bg from "../image/AttorneyBG.webp";
 import Logo from "../components/logo";
 import FadeInWhenVisible from "../components/FadeInWhenVisible"
 import { GoLaw } from "react-icons/go";
-import { CiUser } from "react-icons/ci";
+// import { CiUser } from "react-icons/ci";
 
 const MainPage = () => {
   return (
@@ -38,11 +38,19 @@ const MainPage = () => {
           <FadeInWhenVisible>
             <div className="flex flex-col gap-6 w-full max-w-md">
               <p className="text-center lg:text-lg text-sm text-[#ffffff]">
-                How do you want to use Righticeng?
+                Your one-stop shop to securing legal advice.
               </p>
               <div className="flex flex-col md:flex-row gap-4 justify-center">
                 <Link
-                  to="/lawyersignupform"
+                  to="/register"
+                  className="bg-[#242E4D] text-white py-3 px-6 rounded-lg text-center hover:bg-[#1a2238] transition-colors w-full md:w-auto flex gap-2">
+                  <GoLaw className="text-white mt-1" />
+                  Get Started
+                </Link>
+              </div>
+              {/* <div className="flex flex-col md:flex-row gap-4 justify-center">
+                <Link
+                  to="/lawyersignup"
                   className="bg-[#242E4D] text-white py-3 px-6 rounded-lg text-center hover:bg-[#1a2238] transition-colors w-full md:w-auto flex gap-2">
                   <GoLaw className="text-white mt-1" />
                   As a Lawyer
@@ -53,7 +61,7 @@ const MainPage = () => {
                   <CiUser className="text-white mt-1" />
                   As a Customer
                 </Link>
-              </div>
+              </div> */}
               <div className="mt-3 text-sm text-center text-white/50">
                 Already have an account?{" "}
                 <Link to="/login" className="text-[#BA986B]">
