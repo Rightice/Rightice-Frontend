@@ -27,7 +27,7 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value.trim() }));
+    setForm((prev) => ({ ...prev, [name]: value }));
     if (name === "role") {
       setSelectedRole(value);
     }
@@ -79,18 +79,9 @@ const Register = () => {
         displayName: username,
       });
 
-      const userProfile = {
-        email,
-        username,
-        gender,
-        phone,
-        address,
-        role,
-      };
-
-      // Store the user profile
-      localStorage.setItem(`userProfile_${email}`, JSON.stringify(userProfile));
-      localStorage.setItem("userProfile", JSON.stringify(userProfile));
+      const localStorageKey = `userProfile_${email}`;
+      localStorage.setItem(localStorageKey, JSON.stringify(form));
+      localStorage.setItem("userProfile", JSON.stringify(form));
       localStorage.setItem(
         "authUser",
         JSON.stringify({
@@ -100,11 +91,12 @@ const Register = () => {
         })
       );
 
-      // Optional: logout after registration
       await auth.signOut();
 
       setError("");
       alert("Registration successful! Please login with your credentials.");
+
+      // ✅ Navigate to login page after successful signup
       navigate("/login");
     } catch (err) {
       console.error(err);
@@ -136,54 +128,68 @@ const Register = () => {
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 relative z-10 flex justify-center items-center p-6 lg:p-10 bg-white rounded-tl-[30px] rounded-tr-[30px]">
+      <div className="w-full lg:w-1/2 lg:mt-0 lg:-mt-20 relative z-10 flex justify-center items-center p-6 lg:p-10 bg-white rounded-tl-[30px] rounded-tr-[30px]">
         <form
           onSubmit={handleSignUp}
-          className="w-full max-w-md flex flex-col gap-5">
-          <div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-[#242E4D]">
+          className="w-full max-w-md flex flex-col gap-5"
+        >
+          <div className="mt-16">
+            <h2 className="text-2xl  lg:text-3xl font-bold text-[#242E4D]">
               Create your Account
             </h2>
             <p className="text-black/70">Get started by creating an account</p>
           </div>
 
           <div className="lg:flex lg:flex-row lg:gap-5 flex-col flex gap-5">
-            <input
-              type="text"
-              name="username"
-              placeholder="John Doe"
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
-              required
-            />
-            <select
-              name="gender"
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-sm"
-              required>
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
+            <div className="flex flex-col w-full">
+              <label className="">Name</label>
+              <input
+                type="text"
+                name="username"
+                placeholder="John Doe"
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
+                required
+              />
+            </div>
+            <div className="flex flex-col w-full">
+              <label className="mb-1">Gender</label>
+              <select
+                name="gender"
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-sm"
+                required
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
           </div>
 
           <div className="lg:flex lg:flex-row lg:gap-5 flex-col flex gap-5">
-            <input
-              type="tel"
-              name="phone"
-              placeholder="+234 802 645 4589"
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="johndoe@example.com"
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
-              required
-            />
+            <div className="flex flex-col w-full">
+              <label className="mb">Phone Number</label>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="+234 802 645 4589"
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
+                required
+              />
+            </div>
+            <div className="flex flex-col w-full">
+              <label className="">Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="johndoe@example.com"
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
+                required
+              />
+            </div>
           </div>
 
           <div>
@@ -197,45 +203,53 @@ const Register = () => {
                     setForm((prev) => ({ ...prev, role: roleOption }));
                     setSelectedRole(roleOption);
                   }}
-                  className={`px-4 py-2 rounded-lg border cursor-pointer w-56 ${
+                  className={`px-4 py-2 rounded-lg border ${
                     selectedRole === roleOption
                       ? "bg-[#242E4D] text-white"
                       : "bg-white text-black border-gray-300"
-                  }`}>
+                  }`}
+                >
                   {roleOption.charAt(0).toUpperCase() + roleOption.slice(1)}
                 </button>
               ))}
             </div>
           </div>
 
-          <input
-            type="text"
-            name="address"
-            placeholder="Address"
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
-            required
-          />
-
-          <div className="relative">
+          <div className="flex flex-col w-full">
+            <label className="">Home Address</label>
             <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
+              type="text"
+              name="address"
+              placeholder="Address"
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
               required
             />
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black/70 cursor-pointer hover:text-gray-700 focus:outline-none">
-              {showPassword ? (
-                <Eye size={18} className="text-gray-500" />
-              ) : (
-                <EyeOff size={18} className="text-gray-500" />
-              )}
-            </button>
+          </div>
+
+          <div className="flex flex-col w-full">
+            <label className="">Password</label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black/70 cursor-pointer hover:text-gray-700 focus:outline-none"
+              >
+                {showPassword ? (
+                  <Eye size={18} className="text-gray-500" />
+                ) : (
+                  <EyeOff size={18} className="text-gray-500" />
+                )}
+              </button>
+            </div>
           </div>
 
           {error && (
@@ -267,7 +281,8 @@ const Register = () => {
                 ? "bg-[#242E4D] text-white hover:bg-[#1a223c]"
                 : "bg-gray-400 text-white cursor-not-allowed"
             }`}
-            disabled={loading || !agreed}>
+            disabled={loading || !agreed}
+          >
             {loading ? "Signing Up..." : "Sign Up"}
           </button>
 

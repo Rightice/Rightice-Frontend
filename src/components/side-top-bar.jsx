@@ -2,17 +2,18 @@
 
 import { useState, useEffect, Fragment } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../auth/firebase";
 import { Link } from "react-router-dom";
-
 // Icons
 import { CiUser, CiSettings } from "react-icons/ci";
 import { MdOutlinePayments } from "react-icons/md";
 import { SiGnuprivacyguard } from "react-icons/si";
-import { IoChevronForward, IoChevronBack } from "react-icons/io5";
-
-import LogoutButton from "../components/LogoutButton";
+import {
+  IoLogOutOutline,
+  IoChevronForward,
+  IoChevronBack,
+} from "react-icons/io5";
 
 const navLinks = [
   { to: "/profile", icon: <CiUser />, label: "Profile" },
@@ -24,6 +25,7 @@ const navLinks = [
 const Sidebar = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
+  const [error, setError] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [username, setUsername] = useState("Guest");
 
@@ -37,6 +39,7 @@ const Sidebar = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  // Load user profile data
   useEffect(() => {
     const loadUserProfile = () => {
       if (user?.email) {
@@ -47,6 +50,7 @@ const Sidebar = ({ children }) => {
           setProfileImage(parsed.profileImage || null);
           setUsername(parsed.username || user.displayName || "Guest");
         } else {
+          // Fallback to old storage format
           const oldProfile = localStorage.getItem("userProfile");
           if (oldProfile) {
             const parsed = JSON.parse(oldProfile);
@@ -59,8 +63,11 @@ const Sidebar = ({ children }) => {
 
     loadUserProfile();
 
+    // Create a custom event listener for profile updates
     const handleProfileUpdate = () => loadUserProfile();
     window.addEventListener("profileUpdated", handleProfileUpdate);
+
+    // Also listen for storage events for cross-tab synchronization
     window.addEventListener("storage", handleProfileUpdate);
 
     return () => {
@@ -69,6 +76,7 @@ const Sidebar = ({ children }) => {
     };
   }, [user]);
 
+  // Redirect to profile page if at root
   useEffect(() => {
     if (window.location.pathname === "/") {
       navigate("/profile");
@@ -77,17 +85,41 @@ const Sidebar = ({ children }) => {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
+  const handleLogout = async () => {
+    try {
+      const email = auth.currentUser?.email;
+
+      await signOut(auth);
+
+      // Clean up specific user profile data from localStorage
+      if (email) {
+        localStorage.removeItem(`userProfile_${email}`);
+      }
+
+      // Optionally, remove auth-related global flags
+      localStorage.removeItem("authUser");
+
+      // Reset UI state
+      setUser(null);
+      setProfileImage(null);
+      setIsOpen(false);
+
+      // Navigate to login page
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
+
   const renderNavLink = (link) => (
     <NavLink
       to={link.to}
       className={({ isActive }) =>
-        `flex items-center ${
-          isOpen ? "justify-start" : "justify-center"
-        } gap-3 p-2 rounded-md transition-all duration-200 ${
+        `flex items-center gap-3 p-2 rounded-md transition-all duration-200 ${
           isActive ? "bg-white/20 font-medium" : "hover:bg-white/10"
         }`
-      }
-      title={!isOpen ? link.label : ""}>
+      }>
       <span className="text-2xl">{link.icon}</span>
       {isOpen && <span>{link.label}</span>}
     </NavLink>
@@ -117,55 +149,58 @@ const Sidebar = ({ children }) => {
           ))}
         </nav>
 
-        {/* User profile section - Updated for better responsiveness */}
-        <div className={`flex ${isOpen ? "items-center" : "flex-col"} gap-3`}>
-          <div
-            className={`flex items-center ${
-              isOpen ? "gap-3" : "justify-center mb-3"
-            }`}>
-            <div className="w-10 h-10 rounded-full overflow-hidden bg-white/10 flex items-center justify-center text-white font-bold">
-              {profileImage ? (
-                <img
-                  src={profileImage || "/placeholder.svg"}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = "/placeholder.svg";
-                  }}
-                />
-              ) : (
-                <span className="text-sm">
-                  {username.charAt(0).toUpperCase()}
-                </span>
-              )}
-            </div>
-
-            {isOpen && (
-              <div className="font-semibold text-white truncate max-w-[120px]">
-                {user ? (
-                  <span className="text-base font-normal">{username}</span>
-                ) : (
-                  <NavLink to="/" className="text-base font-normal text-white">
-                    Log in
-                  </NavLink>
-                )}
-                {user && (
-                  <p className="font-light text-[10px] text-[#BA986B] truncate">
-                    {user.email}
-                  </p>
-                )}
-              </div>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full overflow-hidden bg-white/10 flex items-center justify-center text-white font-bold">
+            {profileImage ? (
+              <img
+                src={profileImage || "/placeholder.svg"}
+                alt="Profile"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/placeholder.svg";
+                }}
+              />
+            ) : (
+              <span className="text-sm">
+                {username.charAt(0).toUpperCase()}
+              </span>
             )}
           </div>
 
-          {/* Logout Button - Always visible */}
-          {user && (
-            <div className={`${isOpen ? "" : "flex justify-center"}`}>
-              <LogoutButton isOpen={isOpen} />
+          {isOpen && (
+            <div className="font-semibold text-white truncate">
+              {user ? (
+                <span className="text-base font-normal">{username}</span>
+              ) : (
+                <NavLink to="/" className="text-base font-normal text-white">
+                  Log in
+                </NavLink>
+              )}
+              {user && (
+                <p className="font-light text-[10px] text-[#BA986B]">
+                  {user.email}
+                </p>
+              )}
             </div>
           )}
+
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 p-2 rounded-md hover:bg-white/10 transition-all duration-200 text-left ml-auto cursor-pointer"
+            title="Logout">
+            <span className="text-2xl">
+              <IoLogOutOutline />
+            </span>
+            {/* {isOpen && <span>Logout</span>} */}
+          </button>
         </div>
+
+        {error && (
+          <p className="text-red-500 bg-red-100 p-3 rounded text-sm mt-2">
+            {error}
+          </p>
+        )}
       </aside>
       <main className="flex-1 overflow-auto">{children}</main>
     </div>

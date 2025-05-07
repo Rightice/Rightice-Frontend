@@ -11,20 +11,9 @@ const LogoutButton = ({ isOpen }) => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-
-      // Clear session-related storage
-      const authUser = localStorage.getItem("authUser");
-      if (authUser) {
-        const { email } = JSON.parse(authUser);
-        localStorage.removeItem(`userProfile_${email}`);
-      }
-      localStorage.removeItem("authUser");
-
-      // Redirect to homepage or login
       navigate("/");
     } catch (error) {
-      setError("Failed to logout. Please try again.");
-      console.error("Logout error:", error);
+      setError("Failed to Logout");
     }
   };
 
@@ -36,7 +25,7 @@ const LogoutButton = ({ isOpen }) => {
         <span className="text-lg">
           <IoLogOutOutline />
         </span>
-        {/* {isOpen && <span>Logout</span>} */}
+        {isOpen && <span>Logout</span>}
       </button>
       {error && (
         <p className="text-red-500 bg-red-100 p-3 rounded text-sm mt-2">

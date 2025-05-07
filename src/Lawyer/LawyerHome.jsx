@@ -1,6 +1,6 @@
 import "react";
 import LawyerNavbar from "./LawyerNavbar";
-import bg from "../image/lawyerbg.webp";
+import bg from "../image/lawyerbg.jpg";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
