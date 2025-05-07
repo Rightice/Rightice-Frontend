@@ -138,51 +138,58 @@ const Login = () => {
       <div className="w-full lg:w-1/2 lg:mt-0 lg:-mt-20 relative z-10 lg:rounded-none rounded-tl-[30px] rounded-tr-[30px] lg:shadow-none flex justify-center items-center p-6 lg:p-10 bg-white">
         <form
           onSubmit={handleLogin}
-          className="w-full max-w-md flex flex-col gap-5">
+          className="w-full max-w-md flex flex-col gap-5"
+        >
           <h2 className="text-2xl lg:text-3xl font-bold mb-4 text-[#242E4D]">
             Sign into your Account
           </h2>
 
           <div className="space-y-1">
-            <input
-              id="email"
-              type="email"
-              name="email"
-              placeholder="johndoe@example.com"
-              value={email}
-              onChange={handleChange}
-              className="w-full pb-3 border border-stone-300 rounded px-3 py-2 focus:outline-none placeholder:text-sm placeholder:text-black/70"
-              required
-            />
+            <div className="flex flex-col w-full">
+              <label className="">Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="johndoe@example.com"
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
+                required
+              />
+            </div>
           </div>
 
           <div className="space-y-1 relative">
-            <input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={handleChange}
-              className="w-full pb-3 border border-stone-300 rounded px-3 py-2 pr-10 focus:outline-none placeholder:text-sm placeholder:text-black/70"
-              required
-            />
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black/70 cursor-pointer hover:text-gray-700 focus:outline-none">
-              {showPassword ? (
-                <Eye size={18} className="text-gray-500" />
-              ) : (
-                <EyeOff size={18} className="text-gray-500" />
-              )}
-            </button>
+            <div className="flex flex-col w-full">
+              <label className="">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Password"
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:outline-none placeholder:text-black/70 placeholder:text-sm"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black/70 cursor-pointer hover:text-gray-700 focus:outline-none"
+                >
+                  {showPassword ? (
+                    <Eye size={18} className="text-gray-500" />
+                  ) : (
+                    <EyeOff size={18} className="text-gray-500" />
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
 
           <div className="flex justify-end">
             <Link
               to="/forgot-password"
-              className="text-sm text-[#242E4D] hover:underline">
+              className="text-sm text-[#242E4D] hover:underline"
+            >
               Forgot password?
             </Link>
           </div>
@@ -196,7 +203,8 @@ const Login = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer">
+            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
+          >
             {isLoading ? "Signing in..." : "Sign in"}
           </button>
 
