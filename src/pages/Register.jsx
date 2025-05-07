@@ -27,7 +27,7 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm((prev) => ({ ...prev, [name]: value.trim() }));
     if (name === "role") {
       setSelectedRole(value);
     }
@@ -79,9 +79,18 @@ const Register = () => {
         displayName: username,
       });
 
-      const localStorageKey = `userProfile_${email}`;
-      localStorage.setItem(localStorageKey, JSON.stringify(form));
-      localStorage.setItem("userProfile", JSON.stringify(form));
+      const userProfile = {
+        email,
+        username,
+        gender,
+        phone,
+        address,
+        role,
+      };
+
+      // Store the user profile
+      localStorage.setItem(`userProfile_${email}`, JSON.stringify(userProfile));
+      localStorage.setItem("userProfile", JSON.stringify(userProfile));
       localStorage.setItem(
         "authUser",
         JSON.stringify({
@@ -91,12 +100,11 @@ const Register = () => {
         })
       );
 
+      // Optional: logout after registration
       await auth.signOut();
 
       setError("");
       alert("Registration successful! Please login with your credentials.");
-
-      // ✅ Navigate to login page after successful signup
       navigate("/login");
     } catch (err) {
       console.error(err);
@@ -128,7 +136,7 @@ const Register = () => {
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 lg:mt-0 lg:-mt-20 relative z-10 flex justify-center items-center p-6 lg:p-10 bg-white rounded-tl-[30px] rounded-tr-[30px]">
+      <div className="w-full lg:w-1/2 relative z-10 flex justify-center items-center p-6 lg:p-10 bg-white rounded-tl-[30px] rounded-tr-[30px]">
         <form
           onSubmit={handleSignUp}
           className="w-full max-w-md flex flex-col gap-5">

@@ -13,10 +13,10 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(""); // NEW
 
   const { email, password } = formData;
 
-  // Check for existing session
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -52,6 +52,12 @@ const Login = () => {
     setError("");
     setIsLoading(true);
 
+    if (!selectedRole) {
+      setError("Please select a role before signing in.");
+      setIsLoading(false);
+      return;
+    }
+
     if (!email || !password) {
       setError("Please enter both email and password.");
       setIsLoading(false);
@@ -72,17 +78,30 @@ const Login = () => {
         JSON.stringify({ email: user.email, displayName: user.displayName })
       );
 
-      const storedProfile = localStorage.getItem(`userProfile_${user.email}`);
-      if (storedProfile) {
-        const { role } = JSON.parse(storedProfile);
+      const profileKey = `userProfile_${user.email}`;
+      const storedProfile = localStorage.getItem(profileKey);
 
-        if (role === "lawyer") {
-          navigate("/lawyerdashboard");
-        } else {
-          navigate("/home");
+      if (storedProfile) {
+        const parsed = JSON.parse(storedProfile);
+        const role = parsed.role || selectedRole;
+
+        // Update profile if role wasn't stored before
+        if (!parsed.role) {
+          parsed.role = selectedRole;
+          localStorage.setItem(profileKey, JSON.stringify(parsed));
         }
+
+        navigate(role === "lawyer" ? "/lawyerdashboard" : "/home");
       } else {
-        setError("No profile found. Please complete your registration.");
+        // No profile exists, save minimum with role
+        const newProfile = {
+          email: user.email,
+          username: user.displayName || "Guest",
+          role: selectedRole,
+        };
+        localStorage.setItem(profileKey, JSON.stringify(newProfile));
+
+        navigate(selectedRole === "lawyer" ? "/lawyerdashboard" : "/home");
       }
     } catch (err) {
       console.error(err);
@@ -169,6 +188,30 @@ const Login = () => {
               className="text-[#242E4D] hover:underline">
               Forgot password?
             </Link>
+          </div>
+
+          {/* Role selection buttons */}
+          <div className="flex justify-between gap-4 mb-2">
+            <button
+              type="button"
+              onClick={() => setSelectedRole("customer")}
+              className={`w-full py-2 rounded-lg border cursor-pointer ${
+                selectedRole === "customer"
+                  ? "bg-[#242E4D] text-white"
+                  : "bg-white text-[#242E4D] border-[#242E4D]"
+              }`}>
+              Customer
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedRole("lawyer")}
+              className={`w-full py-2 rounded-lg border cursor-pointer ${
+                selectedRole === "lawyer"
+                  ? "bg-[#242E4D] text-white"
+                  : "bg-white text-[#242E4D] border-[#242E4D]"
+              }`}>
+              Lawyer
+            </button>
           </div>
 
           {error && (

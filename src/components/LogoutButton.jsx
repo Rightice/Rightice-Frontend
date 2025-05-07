@@ -36,7 +36,7 @@ const LogoutButton = ({ isOpen }) => {
         <span className="text-lg">
           <IoLogOutOutline />
         </span>
-        {isOpen && <span>Logout</span>}
+        {/* {isOpen && <span>Logout</span>} */}
       </button>
       {error && (
         <p className="text-red-500 bg-red-100 p-3 rounded text-sm mt-2">

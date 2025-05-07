@@ -190,7 +190,7 @@ const LawyerSidebar = ({ children }) => {
             <span className="text-2xl">
               <IoLogOutOutline />
             </span>
-            {isOpen && <span className="text-sm">Logout</span>}
+            {/* {isOpen && <span className="text-sm">Logout</span>} */}
           </button>
         </div>
 

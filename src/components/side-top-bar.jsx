@@ -134,7 +134,7 @@ const Sidebar = ({ children }) => {
           </div>
 
           {isOpen && (
-            <div className="font-semibold text-white truncate">
+            <div className="font-semibold text-white truncate w-full">
               {user ? (
                 <span className="text-base font-normal">{username}</span>
               ) : (
