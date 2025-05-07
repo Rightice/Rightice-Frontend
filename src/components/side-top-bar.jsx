@@ -81,10 +81,13 @@ const Sidebar = ({ children }) => {
     <NavLink
       to={link.to}
       className={({ isActive }) =>
-        `flex items-center gap-3 p-2 rounded-md transition-all duration-200 ${
+        `flex items-center ${
+          isOpen ? "justify-start" : "justify-center"
+        } gap-3 p-2 rounded-md transition-all duration-200 ${
           isActive ? "bg-white/20 font-medium" : "hover:bg-white/10"
         }`
-      }>
+      }
+      title={!isOpen ? link.label : ""}>
       <span className="text-2xl">{link.icon}</span>
       {isOpen && <span>{link.label}</span>}
     </NavLink>
@@ -114,44 +117,54 @@ const Sidebar = ({ children }) => {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full overflow-hidden bg-white/10 flex items-center justify-center text-white font-bold">
-            {profileImage ? (
-              <img
-                src={profileImage || "/placeholder.svg"}
-                alt="Profile"
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = "/placeholder.svg";
-                }}
-              />
-            ) : (
-              <span className="text-sm">
-                {username.charAt(0).toUpperCase()}
-              </span>
+        {/* User profile section - Updated for better responsiveness */}
+        <div className={`flex ${isOpen ? "items-center" : "flex-col"} gap-3`}>
+          <div
+            className={`flex items-center ${
+              isOpen ? "gap-3" : "justify-center mb-3"
+            }`}>
+            <div className="w-10 h-10 rounded-full overflow-hidden bg-white/10 flex items-center justify-center text-white font-bold">
+              {profileImage ? (
+                <img
+                  src={profileImage || "/placeholder.svg"}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/placeholder.svg";
+                  }}
+                />
+              ) : (
+                <span className="text-sm">
+                  {username.charAt(0).toUpperCase()}
+                </span>
+              )}
+            </div>
+
+            {isOpen && (
+              <div className="font-semibold text-white truncate max-w-[120px]">
+                {user ? (
+                  <span className="text-base font-normal">{username}</span>
+                ) : (
+                  <NavLink to="/" className="text-base font-normal text-white">
+                    Log in
+                  </NavLink>
+                )}
+                {user && (
+                  <p className="font-light text-[10px] text-[#BA986B] truncate">
+                    {user.email}
+                  </p>
+                )}
+              </div>
             )}
           </div>
 
-          {isOpen && (
-            <div className="font-semibold text-white truncate w-full">
-              {user ? (
-                <span className="text-base font-normal">{username}</span>
-              ) : (
-                <NavLink to="/" className="text-base font-normal text-white">
-                  Log in
-                </NavLink>
-              )}
-              {user && (
-                <p className="font-light text-[10px] text-[#BA986B]">
-                  {user.email}
-                </p>
-              )}
+          {/* Logout Button - Always visible */}
+          {user && (
+            <div className={`${isOpen ? "" : "flex justify-center"}`}>
+              <LogoutButton isOpen={isOpen} />
             </div>
           )}
-
-          {/* Logout Button */}
-          {user && <LogoutButton isOpen={isOpen} />}
         </div>
       </aside>
       <main className="flex-1 overflow-auto">{children}</main>

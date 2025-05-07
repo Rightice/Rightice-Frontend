@@ -197,7 +197,7 @@ const Register = () => {
                     setForm((prev) => ({ ...prev, role: roleOption }));
                     setSelectedRole(roleOption);
                   }}
-                  className={`px-4 py-2 rounded-lg border ${
+                  className={`px-4 py-2 rounded-lg border cursor-pointer w-56 ${
                     selectedRole === roleOption
                       ? "bg-[#242E4D] text-white"
                       : "bg-white text-black border-gray-300"
