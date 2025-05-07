@@ -11,9 +11,20 @@ const LogoutButton = ({ isOpen }) => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+
+      // Clear session-related storage
+      const authUser = localStorage.getItem("authUser");
+      if (authUser) {
+        const { email } = JSON.parse(authUser);
+        localStorage.removeItem(`userProfile_${email}`);
+      }
+      localStorage.removeItem("authUser");
+
+      // Redirect to homepage or login
       navigate("/");
     } catch (error) {
-      setError("Failed to Logout");
+      setError("Failed to logout. Please try again.");
+      console.error("Logout error:", error);
     }
   };
 

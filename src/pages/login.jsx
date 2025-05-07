@@ -16,20 +16,18 @@ const Login = () => {
 
   const { email, password } = formData;
 
-  // Check for existing login
+  // Check for existing session
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const profile = localStorage.getItem(`userProfile_${user.email}`);
-        if (profile) {
-          const { role } = JSON.parse(profile);
+        const storedProfile = localStorage.getItem(`userProfile_${user.email}`);
+        if (storedProfile) {
+          const { role } = JSON.parse(storedProfile);
           if (role === "lawyer") {
             navigate("/lawyerdashboard");
           } else {
             navigate("/home");
           }
-        } else {
-          navigate("/home");
         }
       }
     });
@@ -46,7 +44,7 @@ const Login = () => {
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    setShowPassword((prev) => !prev);
   };
 
   const handleLogin = async (e) => {
@@ -66,23 +64,17 @@ const Login = () => {
         email,
         password
       );
-
       const user = userCredential.user;
 
-      // Save authUser
+      // Save auth user
       localStorage.setItem(
         "authUser",
-        JSON.stringify({
-          email: user.email,
-          displayName: user.displayName,
-        })
+        JSON.stringify({ email: user.email, displayName: user.displayName })
       );
 
-      // Redirect based on role
       const storedProfile = localStorage.getItem(`userProfile_${user.email}`);
       if (storedProfile) {
-        const parsed = JSON.parse(storedProfile);
-        const role = parsed.role;
+        const { role } = JSON.parse(storedProfile);
 
         if (role === "lawyer") {
           navigate("/lawyerdashboard");
@@ -90,10 +82,8 @@ const Login = () => {
           navigate("/home");
         }
       } else {
-        navigate("/home");
+        setError("No profile found. Please complete your registration.");
       }
-
-      setError("");
     } catch (err) {
       console.error(err);
       switch (err.code) {
@@ -135,7 +125,7 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 lg:mt-0 lg:-mt-20 relative z-10 lg:rounded-none rounded-tl-[30px] rounded-tr-[30px] lg:shadow-none flex justify-center items-center p-6 lg:p-10 bg-white">
+      <div className="w-full lg:w-1/2 relative z-10 flex justify-center items-center p-6 lg:p-10 bg-white">
         <form
           onSubmit={handleLogin}
           className="w-full max-w-md flex flex-col gap-5">
@@ -143,20 +133,18 @@ const Login = () => {
             Sign into your Account
           </h2>
 
-          <div className="space-y-1">
-            <input
-              id="email"
-              type="email"
-              name="email"
-              placeholder="johndoe@example.com"
-              value={email}
-              onChange={handleChange}
-              className="w-full pb-3 border border-stone-300 rounded px-3 py-2 focus:outline-none placeholder:text-sm placeholder:text-black/70"
-              required
-            />
-          </div>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="johndoe@example.com"
+            value={email}
+            onChange={handleChange}
+            className="w-full border border-stone-300 rounded px-3 py-2 focus:outline-none placeholder:text-sm"
+            required
+          />
 
-          <div className="space-y-1 relative">
+          <div className="relative">
             <input
               id="password"
               type={showPassword ? "text" : "password"}
@@ -164,25 +152,21 @@ const Login = () => {
               placeholder="Enter your password"
               value={password}
               onChange={handleChange}
-              className="w-full pb-3 border border-stone-300 rounded px-3 py-2 pr-10 focus:outline-none placeholder:text-sm placeholder:text-black/70"
+              className="w-full border border-stone-300 rounded px-3 py-2 pr-10 focus:outline-none placeholder:text-sm"
               required
             />
             <button
               type="button"
               onClick={togglePasswordVisibility}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black/70 cursor-pointer hover:text-gray-700 focus:outline-none">
-              {showPassword ? (
-                <Eye size={18} className="text-gray-500" />
-              ) : (
-                <EyeOff size={18} className="text-gray-500" />
-              )}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2">
+              {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
             </button>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end text-sm">
             <Link
               to="/forgot-password"
-              className="text-sm text-[#242E4D] hover:underline">
+              className="text-[#242E4D] hover:underline">
               Forgot password?
             </Link>
           </div>
@@ -196,11 +180,11 @@ const Login = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer">
+            className="w-full bg-[#242E4D] text-white py-3 rounded-lg hover:bg-[#1a223c] disabled:bg-gray-400">
             {isLoading ? "Signing in..." : "Sign in"}
           </button>
 
-          <div className="mt-3 text-sm text-center text-stone-700">
+          <div className="mt-3 text-sm text-center">
             Don&apos;t have an account?{" "}
             <Link to="/register" className="font-semibold text-[#242E4D]">
               Sign up

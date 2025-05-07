@@ -2,18 +2,17 @@
 
 import { useState, useEffect, Fragment } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../auth/firebase";
 import { Link } from "react-router-dom";
+
 // Icons
 import { CiUser, CiSettings } from "react-icons/ci";
 import { MdOutlinePayments } from "react-icons/md";
 import { SiGnuprivacyguard } from "react-icons/si";
-import {
-  IoLogOutOutline,
-  IoChevronForward,
-  IoChevronBack,
-} from "react-icons/io5";
+import { IoChevronForward, IoChevronBack } from "react-icons/io5";
+
+import LogoutButton from "../components/LogoutButton";
 
 const navLinks = [
   { to: "/profile", icon: <CiUser />, label: "Profile" },
@@ -25,7 +24,6 @@ const navLinks = [
 const Sidebar = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
-  const [error, setError] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [username, setUsername] = useState("Guest");
 
@@ -39,7 +37,6 @@ const Sidebar = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // Load user profile data
   useEffect(() => {
     const loadUserProfile = () => {
       if (user?.email) {
@@ -50,7 +47,6 @@ const Sidebar = ({ children }) => {
           setProfileImage(parsed.profileImage || null);
           setUsername(parsed.username || user.displayName || "Guest");
         } else {
-          // Fallback to old storage format
           const oldProfile = localStorage.getItem("userProfile");
           if (oldProfile) {
             const parsed = JSON.parse(oldProfile);
@@ -63,11 +59,8 @@ const Sidebar = ({ children }) => {
 
     loadUserProfile();
 
-    // Create a custom event listener for profile updates
     const handleProfileUpdate = () => loadUserProfile();
     window.addEventListener("profileUpdated", handleProfileUpdate);
-
-    // Also listen for storage events for cross-tab synchronization
     window.addEventListener("storage", handleProfileUpdate);
 
     return () => {
@@ -76,7 +69,6 @@ const Sidebar = ({ children }) => {
     };
   }, [user]);
 
-  // Redirect to profile page if at root
   useEffect(() => {
     if (window.location.pathname === "/") {
       navigate("/profile");
@@ -84,33 +76,6 @@ const Sidebar = ({ children }) => {
   }, [navigate]);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
-
-  const handleLogout = async () => {
-    try {
-      const email = auth.currentUser?.email;
-
-      await signOut(auth);
-
-      // Clean up specific user profile data from localStorage
-      if (email) {
-        localStorage.removeItem(`userProfile_${email}`);
-      }
-
-      // Optionally, remove auth-related global flags
-      localStorage.removeItem("authUser");
-
-      // Reset UI state
-      setUser(null);
-      setProfileImage(null);
-      setIsOpen(false);
-
-      // Navigate to login page
-      navigate("/login", { replace: true });
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
-  };
-
 
   const renderNavLink = (link) => (
     <NavLink
@@ -185,22 +150,9 @@ const Sidebar = ({ children }) => {
             </div>
           )}
 
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 p-2 rounded-md hover:bg-white/10 transition-all duration-200 text-left ml-auto cursor-pointer"
-            title="Logout">
-            <span className="text-2xl">
-              <IoLogOutOutline />
-            </span>
-            {/* {isOpen && <span>Logout</span>} */}
-          </button>
+          {/* Logout Button */}
+          {user && <LogoutButton isOpen={isOpen} />}
         </div>
-
-        {error && (
-          <p className="text-red-500 bg-red-100 p-3 rounded text-sm mt-2">
-            {error}
-          </p>
-        )}
       </aside>
       <main className="flex-1 overflow-auto">{children}</main>
     </div>

@@ -8,6 +8,7 @@ import Logo from "../components/logo";
 import { auth } from "../auth/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
+import LogoutButton from "../components/LogoutButton";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -255,12 +256,7 @@ const Navbar = () => {
 
             {/* Logout Button in Mobile Menu */}
             {user && (
-              <button
-                onClick={handleLogout}
-                className="mt-auto mb-8 flex items-center gap-2 text-white bg-red-600 w-32 hover:bg-red-600/30 px-4 py-3 rounded-lg transition-colors cursor-pointer">
-                <LogOut size={20} />
-                <span>Logout</span>
-              </button>
+              <LogoutButton />
             )}
           </div>
         </div>
