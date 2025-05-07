@@ -28,7 +28,7 @@ const PaymentPage = () => {
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
 
   //Apikey
-  const publicKey = "pk_test_8621609a1d83f1811600e8ca1c38f1e3c1ca4fd9";
+  const publicKey = "pk_test_91abe5ebb9aeb50201ac37bce5524d0a79f321fc";
 
   const componentProps = {
     email,
