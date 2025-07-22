@@ -1,5 +1,5 @@
 # Rightice-Frontend
-Rightice.ng is a user-friendly law web application designed to easily connect individuals in need of legal advice with qualified lawyers. Whether you're facing a legal challenge or simply need guidance, Rightice.ng makes it easy to find and consult with the right legal expert quickly, securely, and without hassle.
+Rightice.ng is a web application designed to connect individuals in need of legal assistance with verified lawyers across various specialties. The frontend interface of Rightice.ng provides a seamless user experience, allowing clients to easily find, consult, and collaborate with legal professionals to resolve their cases efficiently.
 
 # Features
 1. User-friendly interface for both clients and lawyers
