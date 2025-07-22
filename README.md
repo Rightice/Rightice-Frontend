@@ -1,1 +1,1 @@
-The Frontend Interface of Rightice.ng
+Rightice.ng is a web application designed to connect individuals in need of legal assistance with verified lawyers across various specialties. The frontend interface of Rightice.ng provides a seamless user experience, allowing clients to easily find, consult, and collaborate with legal professionals to resolve their cases efficiently.
